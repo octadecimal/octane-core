@@ -3,6 +3,8 @@
 -lib munit
 -lib hamcrest
 -lib msignal
+-lib pixijs
+-lib waud
 -cp src
 
 -cp test

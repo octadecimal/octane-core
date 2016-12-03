@@ -1,6 +1,7 @@
 bin/
 munit/build
 munit/report
-munit/templates
 test/ExampleTest.hx
+test/TestSuite.hx
 octane-core.hxproj
+.temp/
