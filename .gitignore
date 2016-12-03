@@ -3,3 +3,4 @@ munit/build
 munit/report
 munit/templates
 test/ExampleTest.hx
+octane-core.hxproj
