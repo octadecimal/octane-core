@@ -3,5 +3,6 @@ munit/build
 munit/report
 test/ExampleTest.hx
 test/TestSuite.hx
+TestSuite.hx
 octane-core.hxproj
 .temp/
