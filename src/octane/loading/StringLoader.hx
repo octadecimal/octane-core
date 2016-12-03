@@ -30,8 +30,11 @@ class StringLoader implements ILoader
 	public function destroy():Void 
 	{
 		sigSuccess.removeAll();
+		sigError.removeAll();
 		
 		sigSuccess = null;
+		sigError = null;
+		data = null;
 	}
 	
 	
