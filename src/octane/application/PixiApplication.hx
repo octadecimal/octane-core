@@ -1,4 +1,4 @@
-package octane.game.application;
+package octane.application;
 
 import js.Browser;
 import js.html.Event;
@@ -42,6 +42,8 @@ class PixiApplication extends Application implements IApplication
 	public function destroy():Void 
 	{
 		sigReady.removeAll();
+		
+		
 	}
 	
 	
@@ -51,7 +53,7 @@ class PixiApplication extends Application implements IApplication
 	
 	public function initialize(properties:ApplicationProperties, ?backgroundColor:Int=0x000000):Void
 	{
-		_gameProperties = gameProperties;
+		_applicationProperties = properties;
 		
 		// Set pixel ratio, capped at 2
 		//pixelRatio = (Browser.window.devicePixelRatio >= 2) ? 2 : 1;
@@ -99,8 +101,8 @@ class PixiApplication extends Application implements IApplication
 	{
 		if(_applicationView != null && _applicationProperties != null)
 		{
-			_gameView.x = Math.ffloor(Browser.window.innerWidth / 2 - _gameProperties.bucketWidth / 2);
-			_gameView.y = Math.ffloor(Browser.window.innerHeight / 2 - _gameProperties.bucketHeight / 2);
+			_applicationView.x = Math.ffloor(Browser.window.innerWidth / 2 - _applicationProperties.bucketWidth / 2);
+			_applicationView.y = Math.ffloor(Browser.window.innerHeight / 2 - _applicationProperties.bucketHeight / 2);
 		}
 		
 		super._onWindowResize(event);

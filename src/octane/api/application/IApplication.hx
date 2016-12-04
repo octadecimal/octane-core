@@ -16,5 +16,5 @@ interface IApplication extends IDestroyable
 	
 	function initialize(properties:ApplicationProperties, ?backgroundColor:Int=0x000000):Void;
 	
-	function setApplicationViewView(view:Stage):Void;
+	function setApplicationView(view:Stage):Void;
 }
