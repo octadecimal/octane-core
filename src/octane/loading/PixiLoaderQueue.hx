@@ -229,8 +229,6 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 		
 		progress = _numResourcesLoaded / _numResourcesToLoad;
 		
-		trace(_numResourcesLoaded +"/"+ _numResourcesToLoad);
-		
 		if (_numResourcesLoaded == _numResourcesToLoad)
 		{
 			Debug.info(this, "Queue complete.");
