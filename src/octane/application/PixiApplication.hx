@@ -5,7 +5,6 @@ import js.html.Event;
 import msignal.Signal.Signal0;
 import octane.api.application.IApplication;
 import octane.api.application.IApplicationProperties;
-import octane.application.ApplicationProperties;
 import octane.debug.Debug;
 import octane.display.Stage;
 import pixi.plugins.app.Application;
@@ -51,7 +50,7 @@ class PixiApplication extends Application implements IApplication
 	// API
 	//============================================================================================================
 	
-	public function initialize(properties:ApplicationProperties, ?backgroundColor:Int=0x000000):Void
+	public function initialize(properties:IApplicationProperties, ?backgroundColor:Int=0x000000):Void
 	{
 		_applicationProperties = properties;
 		
