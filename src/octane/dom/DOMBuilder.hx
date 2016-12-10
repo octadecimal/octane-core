@@ -77,6 +77,8 @@ class DOMBuilder
 			// Parse scene
 			_scenes.set(sceneID, parseNode(scene));
 		}
+		
+		Debug.info(this, "DOM parsed.");
 	}
 	
 	public function buildScene(sceneName:String, targetParent:ViewComponent):ViewComponent
