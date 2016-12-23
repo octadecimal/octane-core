@@ -5,17 +5,17 @@ package octane.util;
  */
 class StringUtil
 {
-	public static function getClassName(object:Dynamic):String
+	inline public static function getClassName(object:Dynamic):String
 	{
 		return getFullClassName(object).split(".").pop();
 	}
 	
-	public static function getFullClassName(object:Dynamic):String
+	inline public static function getFullClassName(object:Dynamic):String
 	{
 		return Type.getClassName(Type.getClass(object));
 	}
 	
-	public static function prefix(input:String, len:Int, ?pattern:String = " ")
+	inline public static function prefix(input:String, len:Int, ?pattern:String = " ")
 	{
 		var output:String = "";
 		
@@ -27,7 +27,7 @@ class StringUtil
 		return output + input;
 	}
 	
-	public static function suffix(input:String, len:Int, ?pattern:String = " ")
+	inline public static function suffix(input:String, len:Int, ?pattern:String = " ")
 	{
 		var output:String = "";
 		
