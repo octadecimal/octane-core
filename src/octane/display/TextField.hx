@@ -2,6 +2,7 @@ package octane.display;
 
 import octane.display.DisplayObject;
 import octane.types.NativeTypes.NativeTextField;
+import pixi.core.text.TextStyleObject;
 
 /**
  * ...
@@ -13,7 +14,7 @@ class TextField extends DisplayObject
 	/**
 	 * Constructor.
 	 */
-	public function new(text:String, ?style:TextStyle) 
+	public function new(text:String, ?style:TextStyleObject) 
 	{
 		_native_DisplayObject = _native_TextField = new NativeTextField(text, style);
 		
