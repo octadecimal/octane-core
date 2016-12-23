@@ -24,6 +24,8 @@ class DisplayObject implements IDisplayObject
 		
 		sigClicked = new Signal1<DisplayObject>();
 		sigMouseDown = new Signal1<DisplayObject>();
+		sigMouseOut = new Signal1<DisplayObject>();
+		sigMouseOver = new Signal1<DisplayObject>();
 	}
 	
 	/**
@@ -41,6 +43,8 @@ class DisplayObject implements IDisplayObject
 	
 	public var sigClicked(default, null):Signal1<DisplayObject>;
 	public var sigMouseDown(default, null):Signal1<DisplayObject>;
+	public var sigMouseOut(default, null):Signal1<DisplayObject>;
+	public var sigMouseOver(default, null):Signal1<DisplayObject>;
 	
 	
 	
@@ -110,6 +114,16 @@ class DisplayObject implements IDisplayObject
 	private function onMouseDown():Void
 	{
 		sigMouseDown.dispatch(this);
+	}
+	
+	private function onMouseOut():Void
+	{
+		sigMouseOut.dispatch(this);
+	}
+	
+	private function onMouseOver():Void
+	{
+		sigMouseOver.dispatch(this);
 	}
 	
 	
@@ -271,11 +285,15 @@ class DisplayObject implements IDisplayObject
 		{
 			_native_DisplayObject.on("mouseup", onMouseUp);
 			_native_DisplayObject.on("mousedown", onMouseDown);
+			_native_DisplayObject.on("mouseout", onMouseOut);
+			_native_DisplayObject.on("mouseover", onMouseOver);
 		}
 		else
 		{
 			_native_DisplayObject.off("mouseup", onMouseUp);
 			_native_DisplayObject.off("mousedown", onMouseDown);
+			_native_DisplayObject.off("mouseout", onMouseOut);
+			_native_DisplayObject.off("mouseover", onMouseOver);
 		}
 		
 		return _native_DisplayObject.interactive = value;
