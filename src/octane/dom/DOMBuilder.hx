@@ -25,6 +25,7 @@ class DOMBuilder
 	private static inline var BUTTON:String = "button";
 	
 	private var _scenes:Map<String, DOMElement>;
+	private var _prototypes:Map<String, DOMElement>;
 	private var _definitions:Map<String, String>;
 	private var _textureList:Map<String, NativeTexture>;
 	private var _scale:Float;
@@ -50,7 +51,7 @@ class DOMBuilder
 	 */
 	public function destroy():Void 
 	{
-		
+		// TODO
 	}
 	
 	
@@ -58,29 +59,67 @@ class DOMBuilder
 	// API
 	//==================================================================================================================
 	
+	/**
+	 * Parses the passed dom xml. Will only create DOMElement objects for each element,
+	 * but not create the element. Elements will be created when a scene is built.
+	 * @param	dom
+	 */
 	public function parseDom(dom:Xml):Void
 	{
 		_scenes = new Map<String, DOMElement>();
+		_prototypes = new Map<String, DOMElement>();
 		
-		// Loop through scenes
-		for(scene in dom.firstElement().elements())
+		// Loop through root elements
+		for(rootElement in dom.firstElement().elements())
 		{
-			// Get scene id
-			var sceneID:String = scene.get("name");
-			
-			// Ensure scene has id
-			if(sceneID == null)
+			// Handle scenes
+			if (rootElement.nodeName == "scenes")
 			{
-				throw "Found scene without a name: " + scene.toString();
+				for (scene in rootElement.elements())
+				{
+					// Get scene id
+					var sceneID:String = scene.get("name");
+					
+					// Ensure scene has id
+					if(sceneID == null)
+					{
+						throw "Found scene without a name: " + scene.toString();
+					}
+					
+					// Parse scene
+					_scenes.set(sceneID, parseNode(scene));
+				}
 			}
 			
-			// Parse scene
-			_scenes.set(sceneID, parseNode(scene));
+			// Handle prototypes
+			if (rootElement.nodeName == "prototypes")
+			{
+				for (prototype in rootElement.elements())
+				{
+					// Get scene id
+					var prototypeID:String = prototype.get("name");
+					
+					// Ensure scene has id
+					if(prototypeID == null)
+					{
+						throw "Found prototype without a name: " + prototype.toString();
+					}
+					
+					// Parse scene
+					_prototypes.set(prototypeID, parseNode(prototype, true));
+				}
+			}
 		}
 		
 		Debug.info(this, "DOM parsed.");
 	}
 	
+	/**
+	 * Builds a scene and all of its nested child elements.
+	 * @param	sceneName
+	 * @param	targetParent
+	 * @return
+	 */
 	public function buildScene(sceneName:String, targetParent:ViewComponent):ViewComponent
 	{
 		if(!_scenes.exists(sceneName))
@@ -93,6 +132,11 @@ class DOMBuilder
 		return scene;
 	}
 	
+	/**
+	 * Retrieves an element by id.
+	 * @param	id
+	 * @return
+	 */
 	public function getElementById(id:String):DisplayObject
 	{
 		if (_elements.exists(id))
@@ -105,6 +149,11 @@ class DOMBuilder
 		}
 	}
 	
+	/**
+	 * Retrieves a region by id.
+	 * @param	name
+	 * @return
+	 */
 	public function getRegion(name:String):Rectangle
 	{
 		if (_regions.exists(name))
@@ -118,16 +167,32 @@ class DOMBuilder
 		}
 	}
 	
+	/**
+	 * Creates an element by prototype.
+	 * @param	name
+	 * @return
+	 */
+	public function createFromPrototype(name:String):DisplayObject
+	{
+		if (_prototypes.exists(name))
+		{
+			return buildElement(_prototypes.get(name));
+		}
+		else
+		{
+			Debug.error(this, "Prototype not found: " + name);
+			return null;
+		}
+	}
+	
 	
 	
 	// PRIVATE
 	//==================================================================================================================
 	
-	private function parseNode(node:Xml):DOMElement
+	private function parseNode(node:Xml, ?isPrototype:Bool = false):DOMElement
 	{
 		var domElementChildren:Array<DOMElement> = new Array<DOMElement>();
-		
-		//trace("Parsing node: " + node.get("name"));
 		
 		for(child in node.elements())
 		{
@@ -137,6 +202,7 @@ class DOMBuilder
 		var element:DOMElement = {
 			type: node.nodeName,
 			name: node.get("name"),
+			isPrototype: isPrototype,
 			definition: node.get("definition"),
 			children: domElementChildren,
 			x: Std.parseFloat(node.get("x")),
@@ -157,7 +223,7 @@ class DOMBuilder
 		return element;
 	}
 
-	private function buildElement(element:DOMElement, parent:Container):Dynamic
+	private function buildElement(element:DOMElement, ?parent:Container = null):Dynamic
 	{
 		Debug.data(this, "Building element: " + element.name);
 		
@@ -174,7 +240,7 @@ class DOMBuilder
 		return output;
 	}
 	
-	private function buildDisplayObject(element:DOMElement, parent:Container):DisplayObject
+	private function buildDisplayObject(element:DOMElement, ?parent:Container = null):DisplayObject
 	{
 		var displayObject:DisplayObject = null;	
 		var args:Array<Dynamic> = [];
@@ -227,7 +293,7 @@ class DOMBuilder
 				case BUTTON:
 					displayObject = new Button(args[0], args[1], args[2]);
 				default:
-					throw "Type not found: `"+element.type+"`` for element: "+element.name;
+					throw "Type not found: `" + element.type + "`` for element: " + element.name;
 			}
 		}
 		
@@ -243,8 +309,6 @@ class DOMBuilder
 		if (isDefined(element.scaleY))    displayObject.scaleY    = element.scaleY;
 		if (isDefined(element.rotation))  displayObject.rotation  = element.rotation;
 		if (isDefined(element.alpha))     displayObject.alpha     = element.alpha;
-		
-		//trace("Created element: " + displayObject.name);
 		
 		// Add to parent
 		if(parent != null)
@@ -265,16 +329,18 @@ class DOMBuilder
 			cast(displayObject, ViewComponent).setInitialState();
 		}
 		
-		// Save in element table
-		//if (_elements.exists(element.name))
-		//{
-			//throw "Element already exists with id: " + element.name;
-		//}
-		//else
-		//{
-			_elements.set(element.name, displayObject);
-		//}
+		// TODO
+		// Save element (like below), but create an additional map that stores
+		// instances of multiple elements with the same name and expose
+		// a method like getElementsById()
 		
+		// Save element (but ignore prototypes)
+		if (!element.isPrototype)
+		{
+			_elements.set(element.name, displayObject);
+		}
+		
+		// Return created display object element
 		return displayObject;
 	}
 	
@@ -295,14 +361,14 @@ class DOMBuilder
 		}
 		
 		// Save in region table
-		//if (_regions.exists(element.name))
-		//{
-			//throw "Region already defined, names must be unique for rects: " + element.name;
-		//}
-		//else
-		//{
+		if (_regions.exists(element.name))
+		{
+			throw "Region already defined, names must be unique for rects: " + element.name;
+		}
+		else
+		{
 			_regions.set(element.name, region);
-		//}
+		}
 		
 		return region;
 	}
@@ -324,6 +390,7 @@ class DOMBuilder
 	{
 		var textStyle:TextStyle = {};
 		
+		// TODO
 		//textStyle.font = element.font;
 		//textStyle.fill = element.fill;
 		

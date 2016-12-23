@@ -4,6 +4,7 @@ typedef DOMElement =
 {
 	var name:String;
 	var type:String;
+	var isPrototype:Bool;
 	@:optional var definition:String;
 	@:optional var children:Array<DOMElement>;
 	@:optional var x:Float;
