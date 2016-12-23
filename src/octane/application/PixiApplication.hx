@@ -3,6 +3,7 @@ package octane.application;
 import js.Browser;
 import js.html.Event;
 import msignal.Signal.Signal0;
+import msignal.Signal.Signal2;
 import octane.api.application.IApplication;
 import octane.api.application.IApplicationProperties;
 import octane.debug.Debug;
@@ -18,12 +19,25 @@ class PixiApplication extends Application implements IApplication
 	 * Application ready.
 	 */
 	public var sigReady:Signal0;
+	public var sigResized:Signal2<Float, Float>;
+	
+	/**
+	 * Application properties.
+	 */
+	public var properties:IApplicationProperties;
+	
+	/**
+	 * Time since last frame.
+	 */
+	public var frameTime:Float;
+	
 	
 	// Application view
 	private var _applicationView:Stage;
 	
-	// Application properties
-	private var _applicationProperties:IApplicationProperties;
+	// Previous time, used for measuring frame times
+	private var _previousTime:Float;
+	
 	
 	/**
 	 * Constructor.
@@ -33,6 +47,7 @@ class PixiApplication extends Application implements IApplication
 		super();
 		
 		sigReady = new Signal0();
+		sigResized = new Signal2();
 	}
 	
 	/**
@@ -52,15 +67,13 @@ class PixiApplication extends Application implements IApplication
 	
 	public function initialize(properties:IApplicationProperties, ?backgroundColor:Int=0x000000):Void
 	{
-		_applicationProperties = properties;
-		
-		// Set pixel ratio, capped at 2
-		//pixelRatio = (Browser.window.devicePixelRatio >= 2) ? 2 : 1;
-		pixelRatio = 1;
-		//Pixi.RETINA_PREFIX = untyped __js__("/scale-(.+)/");
+		// Application properties
+		this.properties = properties;
 		
 		// Background color
 		this.backgroundColor = backgroundColor;
+		
+		// TODO: Set pixelratio, retina prefix, etc.
 		
 		// Start
 		start();
@@ -96,14 +109,36 @@ class PixiApplication extends Application implements IApplication
 	// OVERRIDES
 	//============================================================================================================
 	
+	/**
+	 * event: Window resized.
+	 * @param	event
+	 */
 	override function _onWindowResize(event:Event) 
 	{
-		if(_applicationView != null && _applicationProperties != null)
+		if(_applicationView != null && properties != null)
 		{
-			_applicationView.x = Math.ffloor(Browser.window.innerWidth / 2 - _applicationProperties.bucketWidth / 2);
-			_applicationView.y = Math.ffloor(Browser.window.innerHeight / 2 - _applicationProperties.bucketHeight / 2);
+			//_applicationView.x = Math.ffloor(_applicationView.x);
+			//_applicationView.y = Math.ffloor(_applicationView.y);
+			_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
+			_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
 		}
 		
 		super._onWindowResize(event);
+		
+		// Dispatch application signals
+		sigResized.dispatch(Browser.window.innerWidth, Browser.window.innerHeight);
+	}
+	
+	/**
+	 * event: Animation frame requested.
+	 * @param	elapsedTime
+	 */
+	override function _onRequestAnimationFrame(elapsedTime:Float) 
+	{
+		super._onRequestAnimationFrame(elapsedTime);
+		
+		frameTime = elapsedTime - _previousTime;
+		
+		_previousTime = elapsedTime;
 	}
 }

@@ -1,6 +1,7 @@
 package octane.api.application;
 
 import msignal.Signal.Signal0;
+import msignal.Signal.Signal2;
 import octane.api.IDestroyable;
 import octane.application.ApplicationProperties;
 import octane.display.Stage;
@@ -11,6 +12,10 @@ import octane.display.Stage;
 interface IApplication extends IDestroyable
 {
 	var sigReady:Signal0;
+	
+	var sigResized:Signal2<Float, Float>;
+	
+	var properties:IApplicationProperties;
 	
 	var backgroundColor:Int;
 	
