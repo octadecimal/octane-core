@@ -31,41 +31,41 @@ class DebugTargetTrace implements IDebugTarget
 	// API
 	//============================================================================================================
 	
-	public function header(caller:Dynamic, message:String):Void
+	inline public function header(caller:Dynamic, message:String):Void
 	{
 		output("=============================================================================================================================");
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + " >> " + message);
 		div();
 	}
 	
-	public function footer(caller:Dynamic, message:String):Void
+	inline public function footer(caller:Dynamic, message:String):Void
 	{
 		div();
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + " >> " + message);
 		output("=============================================================================================================================");
 	}
 	
-	public function div():Void
+	inline public function div():Void
 	{
 		output("-----------------------------------------------------------------------------------------------------------------------------");
 	}
 	
-	public function data(caller:Dynamic, message:String):Void
+	inline public function data(caller:Dynamic, message:String):Void
 	{
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + "    " + message);
 	}
 	
-	public function info(caller:Dynamic, message:String):Void
+	inline public function info(caller:Dynamic, message:String):Void
 	{
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + "  > " + message);
 	}
 	
-	public function warn(caller:Dynamic, message:String):Void
+	inline public function warn(caller:Dynamic, message:String):Void
 	{
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + "  ! WARNING: " + message);
 	}
 	
-	public function error(caller:Dynamic, message:String):Void
+	inline public function error(caller:Dynamic, message:String):Void
 	{
 		output(StringUtil.prefix(StringUtil.getClassName(caller), PADDING) + " !! ERROR: " + message);
 		
@@ -77,7 +77,7 @@ class DebugTargetTrace implements IDebugTarget
 	// PRIVATE
 	//============================================================================================================
 	
-	private function output(message:String):Void
+	inline private function output(message:String):Void
 	{
 		#if flash
 		flash.Lib.trace(message);
