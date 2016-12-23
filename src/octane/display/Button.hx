@@ -5,25 +5,56 @@ import octane.types.NativeTypes.NativeTexture;
 /**
  * ...
  */
-class Button extends Sprite
+class Button extends Container
 {
+	/**
+	 * Optional behavior that may be associated with this button.
+	 */
+	public var behavior:String;
+	
+	// Up texture
 	private var _textureUp:NativeTexture;
+	
+	// Down texture
 	private var _textureDown:NativeTexture;
+	
+	// Down texture
+	private var _textureOver:NativeTexture;
+	
+	// Off texture
 	private var _textureOff:NativeTexture;
+	
+	// Pressed state
+	private var _isPressed:Bool = false;
+	
+	// Button sprite
+	private var _sprite:Sprite;
+	
+	// Textfield label
+	private var _label:TextField;
+	
 	
 	/**
 	 * Constructor.
 	 */
 	public function new(textureUp:NativeTexture, textureDown:NativeTexture, textureOff:NativeTexture) 
 	{
+		super();
+		
 		_textureUp = textureUp;
 		_textureDown = textureDown;
 		_textureOff = textureOff;
 		
-		super(textureUp);
+		if (_textureOff == null) _textureOff = _textureUp;
+		if (_textureDown == null) _textureDown = _textureUp;
+		
+		_sprite = new Sprite(textureUp);
+		addChild(_sprite);
 		
 		sigMouseDown.add(onSigMouseDown);
 		sigClicked.add(onSigMouseUp);
+		sigMouseOver.add(onSigMouseOver);
+		sigMouseOut.add(onSigMouseOut);
 		
 		enable();
 	}
@@ -45,14 +76,23 @@ class Button extends Sprite
 	{
 		interactive = true;
 		
-		texture = _textureUp;
+		_sprite.texture = _textureUp;
 	}
 	
 	public function disable():Void
 	{
 		interactive = false;
 		
-		texture = _textureOff;
+		_sprite.texture = _textureOff;
+	}
+	
+	public function setText(text:String):Void
+	{
+		if (_label == null)
+		{
+			_label = new TextField(text, { fontSize: "9pt" });
+			addChild(_label);
+		}
 	}
 	
 	
@@ -62,13 +102,16 @@ class Button extends Sprite
 	
 	private function onSigMouseUp(displayObject:DisplayObject):Void
 	{
+		_isPressed = false;
+		_label.y = 0;
+		
 		if (interactive)
 		{
-			texture = _textureUp;
+			_sprite.texture = _textureUp;
 		}
 		else
 		{
-			texture = _textureOff;
+			_sprite.texture = _textureOff;
 		}
 	}
 	
@@ -76,11 +119,32 @@ class Button extends Sprite
 	{
 		if (interactive)
 		{
-			texture = _textureDown;
+			_isPressed = true;
+			_label.y = 1;
+			_sprite.texture = _textureDown;
 		}
 		else
 		{
-			texture = _textureOff;
+			_sprite.texture = _textureOff;
 		}
+	}
+	
+	private function onSigMouseOver(displayObject:DisplayObject):Void
+	{
+		if (_isPressed)
+		{
+			_sprite.texture = _textureDown;
+		}
+		else
+		{
+			_sprite.texture = _textureUp;
+		}
+	}
+	
+	private function onSigMouseOut(displayObject:DisplayObject):Void
+	{
+		_isPressed = false;
+		_label.y = 0;
+		_sprite.texture = _textureUp;
 	}
 }
