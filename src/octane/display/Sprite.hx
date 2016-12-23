@@ -48,4 +48,17 @@ class Sprite extends DisplayObject
 	{
 		return _native_Sprite.texture = value;
 	}
+	
+	
+	public var tint(get, set):Int;
+	
+	private function get_tint():Int
+	{
+		return _native_Sprite.mask;
+	}
+	
+	private function set_tint(value:Int):Int
+	{
+		return _native_Sprite.tint = value;
+	}
 }
