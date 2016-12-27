@@ -8,7 +8,7 @@ class ApplicationProperties implements IApplicationProperties
 {
 	public var bucketPath:String = "resources/default/1024x648/scale-1/";
 	public var bucketWidth:Float = 1024;
-	public var bucketHeight:Float = 768;
+	public var bucketHeight:Float = 648;
 	
 	/**
 	 * Constructor.

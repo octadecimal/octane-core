@@ -3,6 +3,7 @@ package octane.application;
 import js.Browser;
 import js.html.Event;
 import msignal.Signal.Signal0;
+import msignal.Signal.Signal1;
 import msignal.Signal.Signal2;
 import octane.api.application.IApplication;
 import octane.api.application.IApplicationProperties;
@@ -20,6 +21,7 @@ class PixiApplication extends Application implements IApplication
 	 */
 	public var sigReady:Signal0;
 	public var sigResized:Signal2<Float, Float>;
+	public var sigTick:Signal1<Float>;
 	
 	/**
 	 * Application properties.
@@ -48,6 +50,7 @@ class PixiApplication extends Application implements IApplication
 		
 		sigReady = new Signal0();
 		sigResized = new Signal2();
+		sigTick = new Signal1();
 	}
 	
 	/**
@@ -135,10 +138,12 @@ class PixiApplication extends Application implements IApplication
 	 */
 	override function _onRequestAnimationFrame(elapsedTime:Float) 
 	{
-		super._onRequestAnimationFrame(elapsedTime);
-		
 		frameTime = elapsedTime - _previousTime;
 		
 		_previousTime = elapsedTime;
+		
+		sigTick.dispatch(frameTime);
+		
+		super._onRequestAnimationFrame(elapsedTime);
 	}
 }
