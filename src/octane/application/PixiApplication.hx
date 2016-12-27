@@ -9,7 +9,6 @@ import octane.api.application.IApplication;
 import octane.api.application.IApplicationProperties;
 import octane.debug.Debug;
 import octane.display.Stage;
-import pixi.core.Pixi;
 import pixi.core.Settings;
 import pixi.plugins.app.Application;
 
@@ -22,7 +21,15 @@ class PixiApplication extends Application implements IApplication
 	 * Application ready.
 	 */
 	public var sigReady:Signal0;
+	
+	/**
+	 * Application resized.
+	 */
 	public var sigResized:Signal2<Float, Float>;
+	
+	/**
+	 * Application tick.
+	 */
 	public var sigTick:Signal1<Float>;
 	
 	/**
@@ -61,8 +68,16 @@ class PixiApplication extends Application implements IApplication
 	public function destroy():Void 
 	{
 		sigReady.removeAll();
+		sigResized.removeAll();
+		sigTick.removeAll();
 		
+		_applicationView.destroy();
 		
+		sigReady = null;
+		sigResized = null;
+		sigTick = null;
+		properties = null;
+		_applicationView = null;
 	}
 	
 	
@@ -70,6 +85,11 @@ class PixiApplication extends Application implements IApplication
 	// API
 	//============================================================================================================
 	
+	/**
+	 * Initializes the application.
+	 * @param	properties
+	 * @param	backgroundColor
+	 */
 	public function initialize(properties:IApplicationProperties, ?backgroundColor:Int=0x000000):Void
 	{
 		// Application properties
@@ -78,9 +98,8 @@ class PixiApplication extends Application implements IApplication
 		// Background color
 		this.backgroundColor = backgroundColor;
 		
-		// TODO: Set pixelratio, retina prefix, etc.
+		// Set resolution
 		this.pixelRatio = properties.bucketScale;
-		
 		Settings.RETINA_PREFIX = untyped __js__("/scale-(.+)/");
 		
 		// Start
@@ -99,6 +118,10 @@ class PixiApplication extends Application implements IApplication
 		sigReady.dispatch();
 	}
 	
+	/**
+	 * Set the applicaiton view, can be called after application has already been initialized.
+	 * @param	view
+	 */
 	public function setApplicationView(view:Stage):Void
 	{
 		_applicationView = view;
@@ -143,12 +166,19 @@ class PixiApplication extends Application implements IApplication
 	 */
 	override function _onRequestAnimationFrame(elapsedTime:Float) 
 	{
+		// Calculate time since last frame
 		frameTime = elapsedTime - _previousTime;
 		
+		// Save current time
 		_previousTime = elapsedTime;
 		
+		// Dispatch tick
 		sigTick.dispatch(frameTime);
 		
+		// TODO: Calculate time passed since initial method invokation and add to elapsedTime,
+		// since it's possible that sigTick dispatches might have overhead -- or simply offload.
+		
+		// Render
 		super._onRequestAnimationFrame(elapsedTime);
 	}
 }
