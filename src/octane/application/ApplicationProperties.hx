@@ -6,10 +6,14 @@ import octane.api.application.IApplicationProperties;
  */
 class ApplicationProperties implements IApplicationProperties
 {
-	public var bucketPath:String = "resources/default/1024x648/scale-1/";
-	public var bucketWidth:Float = 1024;
-	public var bucketHeight:Float = 768;
-	
+	public var bucketPath:String;
+	public var bucketWidth:Float;
+	public var bucketHeight:Float;
+	public var bucketScale:Float;
+	public var isMobile:Bool;
+	public var isPhone:Bool;
+	public var isTablet:Bool;
+
 	/**
 	 * Constructor.
 	 */
@@ -24,5 +28,5 @@ class ApplicationProperties implements IApplicationProperties
 	public function destroy():Void 
 	{
 		
-	}
+	}	
 }

@@ -8,6 +8,8 @@ import octane.api.application.IApplication;
 import octane.api.application.IApplicationProperties;
 import octane.debug.Debug;
 import octane.display.Stage;
+import pixi.core.Pixi;
+import pixi.core.Settings;
 import pixi.plugins.app.Application;
 
 /**
@@ -74,6 +76,9 @@ class PixiApplication extends Application implements IApplication
 		this.backgroundColor = backgroundColor;
 		
 		// TODO: Set pixelratio, retina prefix, etc.
+		this.pixelRatio = properties.bucketScale;
+		
+		Settings.RETINA_PREFIX = untyped __js__("/scale-(.+)/");
 		
 		// Start
 		start();
