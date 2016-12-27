@@ -285,13 +285,17 @@ class DisplayObject implements IDisplayObject
 		{
 			_native_DisplayObject.on("mouseup", onMouseUp);
 			_native_DisplayObject.on("mousedown", onMouseDown);
+			_native_DisplayObject.on("touchstart", onMouseDown);
 			_native_DisplayObject.on("mouseout", onMouseOut);
+			_native_DisplayObject.on("touchend", onMouseOut);
 			_native_DisplayObject.on("mouseover", onMouseOver);
 		}
 		else
 		{
 			_native_DisplayObject.off("mouseup", onMouseUp);
+			_native_DisplayObject.off("touchstart", onMouseUp);
 			_native_DisplayObject.off("mousedown", onMouseDown);
+			_native_DisplayObject.off("touchend", onMouseDown);
 			_native_DisplayObject.off("mouseout", onMouseOut);
 			_native_DisplayObject.off("mouseover", onMouseOver);
 		}
