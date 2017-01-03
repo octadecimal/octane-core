@@ -26,16 +26,24 @@ class WaudLoaderQueue implements ISoundLoaderQueue
 	public var sigComplete(default, null):Signal0;
 	
 	/**
+	 * Number of resources to load.
+	 */
+	public var numResourcesToLoad:Int = 0;
+	
+	/**
+	 * Number of resources loaded.
+	 */
+	public var numResourcesLoaded:Int = 0;
+	
+	/**
 	 * Progress value.
 	 */
 	public var progress(default, null):Float = 1;
 	
+	
 	// Queued sounds
 	private var _queue:Map<String, String>;
 	
-	// Counting
-	private var _numSoundsToLoad:Int = 0;
-	private var _numSoundsLoaded:Int = 0;
 	
 	/**
 	 * Constructor.
@@ -86,7 +94,7 @@ class WaudLoaderQueue implements ISoundLoaderQueue
 	 */
 	public function addSound(id:String, path:String):Void 
 	{
-		_numSoundsToLoad++;
+		numResourcesToLoad++;
 		
 		_queue.set(path, id);
 	}
@@ -96,12 +104,12 @@ class WaudLoaderQueue implements ISoundLoaderQueue
 	 */
 	public function startLoading():Void 
 	{
-		if (_numSoundsToLoad == 0)
+		if (numResourcesToLoad == 0)
 		{
 			return;
 		}
 		
-		_numSoundsLoaded = 0;
+		numResourcesLoaded = 0;
 		progress = 0;
 		
 		for (key in _queue.keys())
@@ -121,21 +129,22 @@ class WaudLoaderQueue implements ISoundLoaderQueue
 	 */
 	private function onSoundLoaded(sound:IWaudSound):Void
 	{
-		_numSoundsLoaded++;
+		numResourcesLoaded++;
 		
-		progress = _numSoundsLoaded / _numSoundsToLoad;
+		progress = numResourcesLoaded / numResourcesToLoad;
 		
 		sigSoundLoaded.dispatch(_queue.get(sound.url), sound);
 		
-		if (_numSoundsLoaded == _numSoundsToLoad)
+		sigProgress.dispatch(progress, _queue.get(sound.url));
+		
+		if (numResourcesLoaded == numResourcesToLoad)
 		{
 			Debug.info(this, "Queue complete.");
-			_numSoundsToLoad = 0;
-			_numSoundsLoaded = 0;
-			_queue = new Map<String, String>();
 			sigComplete.dispatch();
+			
+			_queue = new Map<String, String>();
+			numResourcesToLoad = 0;
+			numResourcesLoaded = 0;
 		}
-		
-		sigProgress.dispatch(progress, _queue.get(sound.url));
 	}
 }

@@ -45,6 +45,16 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	public var sigComplete(default, null):Signal0;
 	
 	/**
+	 * Number of resources to load.
+	 */
+	public var numResourcesToLoad:Int = 0;
+	
+	/**
+	 * Number of resources loaded.
+	 */
+	public var numResourcesLoaded:Int = 0;
+	
+	/**
 	 * Progress value.
 	 */
 	public var progress(default, null):Float = 1;
@@ -55,12 +65,6 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	
 	// Raw strings to load
 	private var _stringResources:Map<String, String>;
-	
-	// Number of resources to load
-	private var _numResourcesToLoad:Int = 0;
-	
-	// Number of resources loaded
-	private var _numResourcesLoaded:Int = 0;
 	
 	
 	/**
@@ -115,7 +119,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	public function addString(id:String, path:String):Void
 	{
-		_numResourcesToLoad++;
+		numResourcesToLoad++;
 		
 		_pixiLoader.add(id, path, onPixiResourceLoaded);
 	}
@@ -127,7 +131,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	public function addXml(id:String, path:String):Void
 	{
-		_numResourcesToLoad++;
+		numResourcesToLoad++;
 		
 		_stringResources.set(id, path);
 	}
@@ -139,7 +143,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	public function addImage(id:String, path:String):Void
 	{
-		_numResourcesToLoad++;
+		numResourcesToLoad++;
 		
 		_pixiLoader.add(id, path, onPixiResourceLoaded);
 	}
@@ -149,13 +153,13 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	public function startLoading():Void
 	{
-		if (_numResourcesToLoad == 0)
+		if (numResourcesToLoad == 0)
 		{
 			return;
 		}
 		
 		progress = 0;
-		_numResourcesLoaded = 0;
+		numResourcesLoaded = 0;
 		
 		// Start pixi loading
 		_pixiLoader.load();
@@ -225,19 +229,20 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	private function handleProgress(id:String):Void
 	{
-		_numResourcesLoaded++;
+		numResourcesLoaded++;
 		
-		progress = _numResourcesLoaded / _numResourcesToLoad;
-		
-		if (_numResourcesLoaded == _numResourcesToLoad)
-		{
-			Debug.info(this, "Queue complete.");
-			_numResourcesToLoad = 0;
-			_numResourcesLoaded = 0;
-			_stringResources = new Map<String, String>();
-			sigComplete.dispatch();
-		}
+		progress = numResourcesLoaded / numResourcesToLoad;
 		
 		sigProgress.dispatch(progress, id);
+		
+		if (numResourcesLoaded == numResourcesToLoad)
+		{
+			Debug.info(this, "Queue complete.");
+			sigComplete.dispatch();
+			
+			_stringResources = new Map<String, String>();
+			numResourcesToLoad = 0;
+			numResourcesLoaded = 0;
+		}
 	}
 }
