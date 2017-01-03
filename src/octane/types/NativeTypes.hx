@@ -13,6 +13,7 @@ typedef NativeStage = pixi.core.display.Container;
 typedef NativeGraphics = pixi.core.graphics.Graphics;
 typedef NativeTexture = pixi.core.textures.Texture;
 typedef NativeTextureArray = Array<NativeTexture>;
+typedef NativePoint = pixi.core.math.Point;
 typedef NativeRectangle = pixi.core.math.shapes.Rectangle;
 typedef NativeSound = WaudSound;
 #end
