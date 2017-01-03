@@ -217,7 +217,8 @@ class DOMBuilder
 			text: node.get("text"),
 			up: node.get("up"),
 			down: node.get("down"),
-			off: node.get("off")
+			off: node.get("off"),
+			region: node.get("region")
 		}
 		
 		return element;
@@ -260,6 +261,7 @@ class DOMBuilder
 				args.push(getTexture(element.up));
 				args.push(getTexture(element.down));
 				args.push(getTexture(element.off));
+				if (element.region != null) args.push(createFromPrototype(element.region));
 		}
 		
 		// Create display object from custom definition, otherwise use element type
@@ -291,7 +293,7 @@ class DOMBuilder
 				case TEXTFIELD:
 					displayObject = new TextField(args[0], args[1]);
 				case BUTTON:
-					displayObject = new Button(args[0], args[1], args[2]);
+					displayObject = new Button(args[0], args[1], args[2], args[3]);
 				default:
 					throw "Type not found: `" + element.type + "`` for element: " + element.name;
 			}
@@ -361,14 +363,14 @@ class DOMBuilder
 		}
 		
 		// Save in region table
-		if (_regions.exists(element.name))
-		{
-			throw "Region already defined, names must be unique for rects: " + element.name;
-		}
-		else
-		{
+		//if (_regions.exists(element.name))
+		//{
+			//throw "Region already defined, names must be unique for rects: " + element.name;
+		//}
+		//else
+		//{
 			_regions.set(element.name, region);
-		}
+		//}
 		
 		return region;
 	}

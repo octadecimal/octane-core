@@ -24,4 +24,5 @@ typedef DOMElement =
 	@:optional var up:String;
 	@:optional var down:String;
 	@:optional var off:String;
+	@:optional var region:String;
 }
