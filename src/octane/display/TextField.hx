@@ -1,24 +1,31 @@
 package octane.display;
 
 import octane.display.DisplayObject;
+import octane.geom.Point;
+import octane.geom.Rectangle;
 import octane.types.NativeTypes.NativeTextField;
 import pixi.core.text.TextStyleObject;
 
 /**
  * ...
  */
-class TextField extends DisplayObject
+class TextField extends Sprite
 {
 	private var _native_TextField(default, null):NativeTextField;
+	
+	private var _region:Rectangle;
 	
 	/**
 	 * Constructor.
 	 */
-	public function new(text:String, ?style:TextStyleObject) 
+	public function new(text:String, ?style:TextStyleObject = null) 
 	{
-		_native_DisplayObject = _native_TextField = new NativeTextField(text, style);
+		if (_native_DisplayObject == null)
+		{
+			_native_DisplayObject = _native_Sprite = _native_TextField = new NativeTextField(text, style);
+		}
 		
-		super();
+		super(null);
 		
 	}
 	
@@ -35,6 +42,9 @@ class TextField extends DisplayObject
 	// PROPERTIES
 	//============================================================================================================
 	
+	/**
+	 * Text.
+	 */
 	public var text(get, set):String;
 
 	/**
@@ -102,4 +112,10 @@ typedef TextStyle = {
 	@:optional var textBaseline:String;
 	@:optional var lineJoin:String;
 	@:optional var miterLimit:Int;
+}
+
+enum TextFieldAlign {
+	LEFT;
+	CENTER;
+	RIGHT;
 }

@@ -107,7 +107,7 @@ class Graphics extends DisplayObject
 	 * @param	radius
 	 * @return
 	 */
-	public function drawRoundedRect(x:Float, y:Float, width:Float, height:Float, radius:Float):Graphics
+	public function drawRoundRect(x:Float, y:Float, width:Float, height:Float, radius:Float):Graphics
 	{
 		_native_Graphics.drawRoundedRect(x, y, width, height, radius);
 		

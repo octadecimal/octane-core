@@ -49,6 +49,13 @@ class Container extends DisplayObject
 		return child;
 	}
 	
+	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
+	{
+		_native_Container.addChildAt(child._native_DisplayObject, index);
+		_childrenMap.set(child._native_DisplayObject, child);
+		return child;
+	}
+	
 	public function removeChild(child:DisplayObject):DisplayObject
 	{
 		_native_Container.removeChild(child._native_DisplayObject);

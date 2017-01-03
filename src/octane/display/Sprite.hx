@@ -1,6 +1,7 @@
 package octane.display;
 
 import octane.display.DisplayObject;
+import octane.geom.Point;
 import octane.types.NativeTypes.NativeSprite;
 import octane.types.NativeTypes.NativeTexture;
 
@@ -37,6 +38,9 @@ class Sprite extends DisplayObject
 	// ACCESSORS
 	//============================================================================================================
 	
+	/**
+	 * Texture.
+	 */
 	public var texture(get, set):NativeTexture;
 	
 	private function get_texture():NativeTexture
@@ -50,6 +54,26 @@ class Sprite extends DisplayObject
 	}
 	
 	
+	/**
+	 * Anchor.
+	 */
+	public var anchor(null, set):Point;
+	
+	/*function get_anchor():Point 
+	{
+		return _native_Sprite.anchor;
+	}*/
+	
+	function set_anchor(value:Point):Point 
+	{
+		_native_Sprite.anchor = value._native_Point;
+		return value;
+	}
+	
+	
+	/**
+	 * Tint.
+	 */
 	public var tint(get, set):Int;
 	
 	private function get_tint():Int

@@ -1,5 +1,8 @@
 package octane.display;
+import octane.geom.Rectangle;
 import octane.types.NativeTypes.NativeTexture;
+import octane.util.DisplayUtil;
+import pixi.mesh.Plane;
 
 
 /**
@@ -33,29 +36,38 @@ class Button extends Container
 	// Textfield label
 	private var _label:TextField;
 	
+	// Textfield label region
+	private var _labelRegion:Rectangle;
+	
 	
 	/**
 	 * Constructor.
 	 */
-	public function new(textureUp:NativeTexture, textureDown:NativeTexture, textureOff:NativeTexture) 
+	public function new(textureUp:NativeTexture, textureDown:NativeTexture, textureOff:NativeTexture, ?labelRegion:Rectangle) 
 	{
 		super();
 		
+		// Save textures
 		_textureUp = textureUp;
 		_textureDown = textureDown;
 		_textureOff = textureOff;
-		
 		if (_textureOff == null) _textureOff = _textureUp;
 		if (_textureDown == null) _textureDown = _textureUp;
 		
+		// Label region
+		_labelRegion = labelRegion != null ? labelRegion : new Rectangle(0, 0, _textureUp.width, _textureUp.height);
+		
+		// Create button sprite
 		_sprite = new Sprite(textureUp);
 		addChild(_sprite);
 		
+		// Mouse events
 		sigMouseDown.add(onSigMouseDown);
 		sigClicked.add(onSigMouseUp);
 		sigMouseOver.add(onSigMouseOver);
 		sigMouseOut.add(onSigMouseOut);
 		
+		// Initially enable
 		enable();
 	}
 	
@@ -64,6 +76,22 @@ class Button extends Container
 	 */
 	override public function destroy():Void 
 	{
+		if (_textureUp != null) _textureUp.destroy();
+		if (_textureDown != null) _textureDown.destroy();
+		if (_textureOver != null) _textureOver.destroy();
+		if (_textureOff != null) _textureOff.destroy();
+		if (_sprite != null) _sprite.removeFromParent(true);
+		if (_label != null) _label.removeFromParent(true);
+		if (_labelRegion != null) _labelRegion.destroy();
+		
+		_textureUp = null;
+		_textureDown = null;
+		_textureOver = null;
+		_textureOff = null;
+		_sprite = null;
+		_label = null;
+		_labelRegion = null;
+		
 		super.destroy();
 	}
 	
@@ -93,6 +121,12 @@ class Button extends Container
 			_label = new TextField(text, { fontSize: "9pt" });
 			addChild(_label);
 		}
+		else
+		{
+			_label.text = text;
+		}
+		
+		DisplayUtil.fitTextFieldToRegion(_label, _labelRegion);
 	}
 	
 	
@@ -103,7 +137,7 @@ class Button extends Container
 	private function onSigMouseUp(displayObject:DisplayObject):Void
 	{
 		_isPressed = false;
-		_label.y = 0;
+		_label.pivotY = 0;
 		
 		if (interactive)
 		{
@@ -120,7 +154,7 @@ class Button extends Container
 		if (interactive)
 		{
 			_isPressed = true;
-			_label.y = 1;
+			_label.pivotY = -1;
 			_sprite.texture = _textureDown;
 		}
 		else
@@ -144,7 +178,7 @@ class Button extends Container
 	private function onSigMouseOut(displayObject:DisplayObject):Void
 	{
 		_isPressed = false;
-		_label.y = 0;
+		_label.pivotY = 0;
 		_sprite.texture = _textureUp;
 	}
 }
