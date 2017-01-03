@@ -38,6 +38,14 @@ class PixiApplication extends Application implements IApplication
 	public var properties:IApplicationProperties;
 	
 	/**
+	 * Bucket and screen boundaries.
+	 */
+	public var bucketWidth:Float;
+	public var bucketHeight:Float;
+	public var screenWidth:Float;
+	public var screenHeight:Float;
+	
+	/**
 	 * Time since last frame.
 	 */
 	public var frameTime:Float;
@@ -95,6 +103,10 @@ class PixiApplication extends Application implements IApplication
 		// Application properties
 		this.properties = properties;
 		
+		// Save bucket props
+		this.bucketWidth = properties.bucketWidth;
+		this.bucketHeight = properties.bucketHeight;
+		
 		// Background color
 		this.backgroundColor = backgroundColor;
 		
@@ -146,12 +158,15 @@ class PixiApplication extends Application implements IApplication
 	 */
 	override function _onWindowResize(event:Event) 
 	{
+		this.screenWidth = Browser.window.innerWidth;
+		this.screenHeight = Browser.window.innerHeight;
+		
 		if(_applicationView != null && properties != null)
 		{
 			//_applicationView.x = Math.ffloor(_applicationView.x);
 			//_applicationView.y = Math.ffloor(_applicationView.y);
-			_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
-			_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
+			//_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
+			//_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
 		}
 		
 		super._onWindowResize(event);

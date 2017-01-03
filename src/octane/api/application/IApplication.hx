@@ -18,6 +18,10 @@ interface IApplication extends IDestroyable
 	
 	var properties:IApplicationProperties;
 	
+	var screenWidth:Float;
+	
+	var screenHeight:Float;
+	
 	var backgroundColor:Int;
 	
 	function initialize(properties:ApplicationProperties, ?backgroundColor:Int=0x000000):Void;
