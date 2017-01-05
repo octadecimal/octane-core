@@ -9,3 +9,5 @@
 
 -cp test
 -js munit/build/js_test.js
+
+-debug
