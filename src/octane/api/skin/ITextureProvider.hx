@@ -1,4 +1,4 @@
-package octane.skin;
+package octane.api.skin;
 
 import octane.api.IDestroyable;
 import octane.types.NativeTypes.NativeTexture;
