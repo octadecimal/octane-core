@@ -23,7 +23,7 @@ class Assert
 		if (object == null)
 		{
 			Debug.error("[ASSERT]", "[FAIL isNotNull] " + message);
-		}
-	}
+		}	
 #end
+	}
 }
