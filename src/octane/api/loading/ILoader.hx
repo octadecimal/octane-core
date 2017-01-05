@@ -1,11 +1,12 @@
 package octane.api.loading;
 
 import msignal.Signal.Signal2;
+import octane.api.IDestroyable;
 
 /**
  * 
  */
-interface ILoader 
+interface ILoader extends IDestroyable
 {
 	public var id(default, null):String;
 	public var data(default, null):Dynamic;
