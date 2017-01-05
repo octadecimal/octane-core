@@ -12,15 +12,29 @@ import octane.loading.StringLoader;
  */
 class StringLoaderTest 
 {
+	static private inline var TIMEOUT:Float = 2500;
+	
 	public function new() 
 	{
 		
 	}
 	
 	@AsyncTest
-	public function testStringLoader(factory:AsyncFactory):Void
+	public function testStringLoaderSuccess(factory:AsyncFactory):Void
 	{
-		var handler:Dynamic = factory.createHandler(this, onStringLoaderSuccess, 2500);
+		function onStringLoaderError(loader:ILoader, error:String):Void
+		{
+			Assert.fail("String loader failed: " + loader.id + " -> " + error);
+			loader.destroy();
+		}
+		
+		function onStringLoaderSuccess(loader:ILoader, data:String):Void
+		{
+			Assert.areEqual(data, "Valid text file!");
+			loader.destroy();
+		}
+		
+		var handler:Dynamic = factory.createHandler(this, onStringLoaderSuccess, TIMEOUT);
 		
 		var stringLoader:StringLoader = new StringLoader();
 		stringLoader.sigSuccess.addOnce(handler);
@@ -28,13 +42,24 @@ class StringLoaderTest
 		stringLoader.load("validTextFile", "ValidTextFile.txt");
 	}
 	
-	private function onStringLoaderError(loader:ILoader, error:String):Void
+	@AsyncTest
+	public function testStringLoaderFail(factory:AsyncFactory):Void
 	{
-		Assert.fail("String loader failed: " + loader.id + " -> "+error);
-	}
-	
-	private function onStringLoaderSuccess(loader:ILoader, data:String):Void
-	{
-		Assert.areEqual(data, "Valid text file!");
+		function onStringLoaderError(loader:ILoader, error:String):Void
+		{
+			loader.destroy();
+		}
+		
+		function onStringLoaderSuccess(loader:ILoader, data:String):Void
+		{
+			Assert.fail("String loader should have failed: " + loader.id);
+		}
+		
+		var handler:Dynamic = factory.createHandler(this, onStringLoaderError, TIMEOUT);
+		
+		var stringLoader:StringLoader = new StringLoader();
+		stringLoader.sigSuccess.addOnce(onStringLoaderSuccess);
+		stringLoader.sigError.addOnce(handler);
+		stringLoader.load("MissingTextFile", "MissingTextFile.txt");
 	}
 }
