@@ -39,15 +39,23 @@ class Container extends DisplayObject
 	
 	
 	
+	// ACCESSORS
+	//============================================================================================================
+	
+	public var numChildren(get, null):Int;
+	function get_numChildren():Int 
+	{
+		return _native_Container.children.length;
+	}
+	
+	
+	
 	// API
 	//============================================================================================================
 	
 	public function addChild(child:DisplayObject):DisplayObject
 	{
-		_native_Container.addChild(child._native_DisplayObject);
-		_childrenMap.set(child._native_DisplayObject, child);
-		child.parent = this;
-		return child;
+		return addChildAt(child, numChildren);
 	}
 	
 	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
@@ -64,6 +72,11 @@ class Container extends DisplayObject
 		_childrenMap.remove(child._native_DisplayObject);
 		child.parent = null;
 		return child;
+	}
+	
+	public function getChildAt(index:Int):DisplayObject
+	{
+		return _childrenMap.get(_native_Container.getChildAt(index));
 	}
 	
 	public function getChildByName(childName:String):DisplayObject
