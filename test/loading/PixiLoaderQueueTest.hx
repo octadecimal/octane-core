@@ -77,8 +77,6 @@ class PixiLoaderQueueTest
 	
 	private function onXmlLoaded(id:String, xml:Xml) 
 	{
-		trace("Loaded xml: " + id);
-		
 		Assert.isType(xml, Xml);
 		Assert.areEqual(id, "ValidXML.xml");
 	}
