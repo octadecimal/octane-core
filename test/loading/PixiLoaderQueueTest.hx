@@ -12,6 +12,8 @@ import octane.types.NativeTypes.NativeTexture;
  */
 class PixiLoaderQueueTest 
 {
+	var _loaderQueue:PixiLoaderQueue;
+	
 	public function new() 
 	{
 		
@@ -27,6 +29,8 @@ class PixiLoaderQueueTest
 	public function afterClass():Void
 	{
 		// This will run once per test class
+		
+		_loaderQueue.destroy();
 	}
 	
 	@Before
@@ -51,18 +55,24 @@ class PixiLoaderQueueTest
 	@AsyncTest
 	public function testLoad2Textures(factory:AsyncFactory):Void
 	{
-		var handler:Dynamic = factory.createHandler(this, onLoaderQueueComplete, 1500);
+		var handler:Dynamic = factory.createHandler(this, onLoaderQueueComplete, 5000);
 		
-		var loaderQueue:PixiLoaderQueue = new PixiLoaderQueue();
-		loaderQueue.addImage("image_01", "image_01.png");
-		loaderQueue.addImage("image_02", "image_02.png");
-		loaderQueue.addXml("xml_01", "ValidXML.xml");
+		_loaderQueue = new PixiLoaderQueue();
+		_loaderQueue.startLoading();
 		
-		loaderQueue.sigXmlLoaded.add(onXmlLoaded);
-		loaderQueue.sigTextureLoaded.add(onSigTextureLoaded);
-		loaderQueue.sigComplete.addOnce(handler);
+		_loaderQueue.addImage("image_01.png", "image_01.png");
+		_loaderQueue.addImage("image_02.png", "image_02.png");
+		_loaderQueue.addXml("ValidXML.xml", "ValidXML.xml");
+		_loaderQueue.addString("Phoenix_0.json", "Phoenix_0.json");
+		_loaderQueue.addString("ValidTextFile.txt", "ValidTextFile.txt");
+		_loaderQueue.addString("ValidJSON.json", "ValidJSON.json");
 		
-		loaderQueue.startLoading();
+		_loaderQueue.sigXmlLoaded.add(onXmlLoaded);
+		_loaderQueue.sigTextureLoaded.add(onSigTextureLoaded);
+		_loaderQueue.sigSubtextureLoaded.add(onSigSubtextureLoaded);
+		_loaderQueue.sigComplete.addOnce(handler);
+		
+		_loaderQueue.startLoading();
 	}
 	
 	private function onXmlLoaded(id:String, xml:Xml) 
@@ -70,15 +80,21 @@ class PixiLoaderQueueTest
 		trace("Loaded xml: " + id);
 		
 		Assert.isType(xml, Xml);
-		Assert.areNotEqual(id, "xml_01");
+		Assert.areEqual(id, "ValidXML.xml");
 	}
 	
 	private function onSigTextureLoaded(id:String, texture:NativeTexture) 
 	{
-		trace("Loaded texture: " + id);
-		
+		Assert.isNotNull(texture);
 		Assert.isType(texture, NativeTexture);
-		Assert.isTrue(id == "image_01" || id == "image_02");
+		Assert.isTrue(id == "image_01.png" || id == "image_02.png");
+	}
+	
+	private function onSigSubtextureLoaded(id:String, texture:NativeTexture) 
+	{
+		Assert.isNotNull(texture);
+		Assert.isType(texture, NativeTexture);
+		Assert.isTrue(id.indexOf("Phoenix1_") > -1);
 	}
 	
 	private function onLoaderQueueComplete():Void

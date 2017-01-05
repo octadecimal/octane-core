@@ -197,8 +197,6 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 				{
 					sigSubtextureLoaded.dispatch(texture, NativeTexture.fromFrame(texture));
 				}
-				
-				sigTextureLoaded.dispatch(resource.name, resource.texture);
 			}
 			else
 			{
@@ -216,7 +214,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 */
 	private function onStringLoaded(loader:ILoader, data:String) 
 	{
-		if (loader.id.lastIndexOf(".xml") > 0)
+		if (loader.id.lastIndexOf(".xml") > -1)
 		{
 			sigXmlLoaded.dispatch(loader.id, Xml.parse(data));
 		}
