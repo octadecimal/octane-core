@@ -46,6 +46,7 @@ class Container extends DisplayObject
 	{
 		_native_Container.addChild(child._native_DisplayObject);
 		_childrenMap.set(child._native_DisplayObject, child);
+		child.parent = this;
 		return child;
 	}
 	
@@ -53,6 +54,7 @@ class Container extends DisplayObject
 	{
 		_native_Container.addChildAt(child._native_DisplayObject, index);
 		_childrenMap.set(child._native_DisplayObject, child);
+		child.parent = this;
 		return child;
 	}
 	
