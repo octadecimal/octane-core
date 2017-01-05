@@ -41,6 +41,9 @@ class DisplayObjectTest
 	@Test
 	public function testProperties():Void
 	{
+		_displayObject.name = "testName";
+		Assert.areEqual("testName", _displayObject.name);
+		
 		_displayObject.x = 100;
 		Assert.areEqual(100, _displayObject.x);
 		
