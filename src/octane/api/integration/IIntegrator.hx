@@ -2,8 +2,8 @@ package octane.api.integration;
 
 import octane.api.IDestroyable;
 import octane.types.Currency;
-import superslick.externs.common.gamebridge.GameBridge.TrackPageEventParams;
-import superslick.externs.common.gamebridge.GameBridge.TrackPageViewParams;
+//import superslick.externs.common.gamebridge.GameBridge.TrackPageEventParams;
+//import superslick.externs.common.gamebridge.GameBridge.TrackPageViewParams;
 
 /**
  * ...
@@ -278,13 +278,13 @@ interface IIntegrator extends IDestroyable
 	/**
 	 * Tells the wrapper to track page events.
 	 */
-	function trackPageEvent(params:TrackPageEventParams):Void;
+	//function trackPageEvent(params:TrackPageEventParams):Void;
 	
 	
 	/**
 	 * Tells the wrapper to track page views.
 	 */
-	function trackPageView(params:TrackPageViewParams):Void;
+	//function trackPageView(params:TrackPageViewParams):Void;
 	
 	
 	/**
