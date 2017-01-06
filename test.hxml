@@ -1,10 +1,10 @@
 ## JavaScript
 -main TestMain
--lib munit
--lib hamcrest
--lib msignal
--lib pixijs
--lib waud
+-lib munit:2.1.2
+-lib hamcrest:2.0.1
+-lib msignal:1.2.4
+-lib pixijs:4.2.3
+-lib waud:0.8.2
 -cp src
 
 -cp test

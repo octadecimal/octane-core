@@ -1,0 +1,5 @@
+-cmd haxelib install munit 2.1.2 --always || true
+-cmd haxelib install hamcrest 2.0.1 --always || true
+-cmd haxelib install msignal 1.2.4 --always || true
+-cmd haxelib install pixijs 4.2.3 --always || true
+-cmd haxelib install waud 0.8.2 --always || true
