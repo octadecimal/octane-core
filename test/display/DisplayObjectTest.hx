@@ -85,13 +85,21 @@ class DisplayObjectTest
 		
 		_displayObject.cacheAsBitmap = true;
 		Assert.isTrue(_displayObject.cacheAsBitmap);
-		
+	}
+	
+	@Test
+	private function testInteractive():Void
+	{
 		_displayObject.interactive = true;
 		Assert.isTrue(_displayObject.interactive);
 		
 		_displayObject.interactive = false;
 		Assert.isFalse(_displayObject.interactive);
-		
+	}
+	
+	@Test
+	private function testMasking():Void
+	{
 		_displayObject.mask = new Container();
 		Assert.isNotNull(_displayObject.mask);
 		Assert.isType(_displayObject.mask, Container);
