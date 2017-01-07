@@ -3,6 +3,7 @@ machine:
     - sudo add-apt-repository ppa:haxe/releases -y
     - sudo apt-get update
     - sudo apt-get install haxe -y
+    - sudo apt-get install phantomjs -y
     - mkdir ~/haxelib && haxelib setup ~/haxelib
 
 test:
