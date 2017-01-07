@@ -5,6 +5,10 @@ machine:
     - sudo apt-get install haxe -y
     - sudo apt-get install phantomjs -y
     - mkdir ~/haxelib && haxelib setup ~/haxelib
+    - git clone https://github.com/jgranick/MassiveUnit ~/munit
+    - haxelib dev munit ~/munit/src
+    - cd ~/munit/tool
+    - haxe build.hxml
 
 test:
   override:
