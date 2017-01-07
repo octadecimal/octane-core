@@ -11,7 +11,7 @@ machine:
     - ls ~ -al
     - ls ~/munit -al
     - ls ~/munit/tool -al
-    - haxe build.hxml
+    - haxe ~/munit/tool/build.hxml
 
 test:
   override:
