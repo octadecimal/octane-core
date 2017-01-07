@@ -2,6 +2,7 @@ package octane.api.loading;
 
 import msignal.Signal;
 import octane.api.IDestroyable;
+import octane.display.SpineResource;
 import octane.types.NativeTypes;
 
 /**
@@ -13,6 +14,7 @@ interface IAssetLoaderQueue extends ILoaderQueue
 	var sigXmlLoaded(default, null):Signal2<String, Dynamic>;
 	var sigTextureLoaded(default, null):Signal2<String, NativeTexture>;
 	var sigSubtextureLoaded(default, null):Signal2<String, NativeTexture>;
+	var sigSpineResourceLoaded(default, null):Signal2<String, SpineResource>;
 	
 	function addString(id:String, path:String):Void;
 	function addXml(id:String, path:String):Void;

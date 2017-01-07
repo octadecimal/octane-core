@@ -8,6 +8,7 @@ typedef NativeDisplayObject = pixi.core.display.DisplayObject;
 typedef NativeContainer = pixi.core.display.Container;
 typedef NativeSprite = pixi.core.sprites.Sprite;
 typedef NativeMovieClip = pixi.extras.MovieClip;
+typedef NativeSpine = pixi.plugins.spine.Spine;
 typedef NativeTextField = pixi.core.text.Text;
 typedef NativeStage = pixi.core.display.Container;
 typedef NativeGraphics = pixi.core.graphics.Graphics;

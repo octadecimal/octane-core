@@ -19,7 +19,10 @@ class Container extends DisplayObject
 	public function new() 
 	{
 		// Create native container
-		_native_DisplayObject = _native_Container = new NativeContainer();
+		if (_native_Container == null)
+		{
+			_native_DisplayObject = _native_Container = new NativeContainer();
+		}
 		
 		// Create child lookup map
 		_childrenMap = new Map<NativeDisplayObject, DisplayObject>();

@@ -12,6 +12,9 @@ class DisplayObject implements IDisplayObject
 {
 	private var _native_DisplayObject(null, null):NativeDisplayObject;
 	
+	private var _virtualScaleX:Float = 1;
+	private var _virtualScaleY:Float = 1;
+	
 	/**
 	 * Constructor.
 	 */
@@ -82,6 +85,8 @@ class DisplayObject implements IDisplayObject
 	public var parent(default, default):Container;
 	
 	public var interactive(get, set):Bool;
+	
+	public var resolution(default, set):Float = 1;
 	
 	
 	
@@ -188,23 +193,26 @@ class DisplayObject implements IDisplayObject
 	
 	private function get_scaleX():Float
 	{
-		return _native_DisplayObject.scale.x;
+		//return _native_DisplayObject.scale.x / resolution;
+		return _virtualScaleX;
 	}
 	
 	private function set_scaleX(value:Float):Float
 	{
-		return _native_DisplayObject.scale.x = value;
+		_native_DisplayObject.scale.x = value / resolution;
+		return _virtualScaleX = value;
 	}
 	
 	
 	private function get_scaleY():Float
 	{
-		return _native_DisplayObject.scale.y;
+		return _virtualScaleY;
 	}
 	
 	private function set_scaleY(value:Float):Float
 	{
-		return _native_DisplayObject.scale.y = value;
+		_native_DisplayObject.scale.y = value / resolution;
+		return _virtualScaleX = value;
 	}
 	
 	
@@ -260,6 +268,18 @@ class DisplayObject implements IDisplayObject
 	private function set_rotation(value:Float):Float
 	{
 		return _native_DisplayObject.rotation = value;
+	}
+	
+	
+	private function set_resolution(value:Float):Float
+	{
+		this.resolution = value;
+		this.scaleX = this.scaleX;
+		this.scaleY = this.scaleY;
+		
+		trace(this.scaleX, this.scaleY);
+		
+		return this.resolution;
 	}
 	
 	

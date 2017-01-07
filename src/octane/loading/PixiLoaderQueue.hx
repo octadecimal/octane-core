@@ -5,6 +5,7 @@ import msignal.Signal.Signal2;
 import octane.api.loading.IAssetLoaderQueue;
 import octane.api.loading.ILoader;
 import octane.debug.Debug;
+import octane.display.SpineResource;
 import octane.types.NativeTypes.NativeTexture;
 import pixi.loaders.Loader;
 import pixi.loaders.Resource;
@@ -33,6 +34,11 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 	 * Subtextures (tilesheet) loaded.
 	 */
 	public var sigSubtextureLoaded(default, null):Signal2<String, NativeTexture>;
+	
+	/**
+	 * Spine resource loaded.
+	 */
+	public var sigSpineResourceLoaded(default, null):Signal2<String, SpineResource>;
 	
 	/**
 	 * Loading progress.
@@ -76,6 +82,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 		
 		sigTextureLoaded = new Signal2();
 		sigSubtextureLoaded = new Signal2();
+		sigSpineResourceLoaded = new Signal2();
 		sigStringLoaded = new Signal2();
 		sigXmlLoaded = new Signal2();
 		sigProgress = new Signal2();
@@ -99,6 +106,7 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 		sigXmlLoaded.removeAll();
 		sigTextureLoaded.removeAll();
 		sigSubtextureLoaded.removeAll();
+		sigSpineResourceLoaded.removeAll();
 		sigProgress.removeAll();
 		sigComplete.removeAll();
 		
@@ -191,6 +199,11 @@ class PixiLoaderQueue implements IAssetLoaderQueue
 		
 		if (resource.isJson)
 		{
+			if (Reflect.hasField(resource, "spineAtlas"))
+			{
+				sigSpineResourceLoaded.dispatch(resource.name, { atlas: Reflect.getProperty(resource, "spineAtlas"), data: Reflect.getProperty(resource, "spineData") });
+			}
+			
 			if (resource.textures != null)
 			{
 				for (texture in Reflect.fields(resource.textures))
