@@ -193,7 +193,6 @@ class DisplayObject implements IDisplayObject
 	
 	private function get_scaleX():Float
 	{
-		//return _native_DisplayObject.scale.x / resolution;
 		return _virtualScaleX;
 	}
 	
@@ -212,7 +211,7 @@ class DisplayObject implements IDisplayObject
 	private function set_scaleY(value:Float):Float
 	{
 		_native_DisplayObject.scale.y = value / resolution;
-		return _virtualScaleX = value;
+		return _virtualScaleY = value;
 	}
 	
 	
