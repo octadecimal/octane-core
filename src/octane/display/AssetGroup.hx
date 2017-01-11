@@ -1,4 +1,5 @@
 package octane.display;
+
 import octane.api.display.IAnimation;
 import octane.debug.Debug;
 
@@ -59,8 +60,6 @@ class AssetGroup extends Container
 		animation.play();
 		
 		addChild(cast animation);
-		
-		trace(name, animation.x, animation.y, animation.width, animation.height);
 	}
 	
 	public function showSprite(name:String):Void
@@ -100,6 +99,22 @@ class AssetGroup extends Container
 		{
 			Debug.warn(this, "Animation not found: " + name);
 		}
+	}
+	
+	public function setAssetResolution(assetName:String, value:Float) 
+	{
+		var object:DisplayObject = null;
+		
+		if (_sprites.exists(assetName))
+		{
+			object = _sprites.get(assetName);
+		}
+		else if (_animations.exists(assetName))
+		{
+			object = cast _animations.get(assetName);
+		}
+		
+		object.resolution = value;
 	}
 	
 	

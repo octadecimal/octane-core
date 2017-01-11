@@ -1,9 +1,10 @@
 package octane.display;
 
-import msignal.Signal;
+import msignal.Signal.Signal1;
 import octane.api.display.IDisplayObject;
+import octane.api.display.ISkin;
 import octane.display.Container;
-import octane.types.NativeTypes;
+import octane.types.NativeTypes.NativeDisplayObject;
 
 /**
  * ...
@@ -36,7 +37,24 @@ class DisplayObject implements IDisplayObject
 	 */
 	public function destroy():Void
 	{
+		if (interactive)
+		{
+			interactive = false;
+		}
+		
+		sigClicked.removeAll();
+		sigMouseDown.removeAll();
+		sigMouseOut.removeAll();
+		sigMouseOver.removeAll();
+		
 		_native_DisplayObject.destroy();
+		
+		sigClicked = null;
+		sigMouseDown = null;
+		sigMouseOut = null;
+		sigMouseOver = null;
+		gameSkin = null;
+		_native_DisplayObject = null;
 	}
 	
 	
@@ -55,6 +73,8 @@ class DisplayObject implements IDisplayObject
 	//============================================================================================================
 	
 	public var name(default, default):String;
+	
+	public var gameSkin(default, default):ISkin;
 	
 	public var cacheAsBitmap(get, set):Bool;
 	

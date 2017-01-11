@@ -1,5 +1,6 @@
 package octane.dom;
 
+import octane.api.display.ISkin;
 import octane.debug.Debug;
 import octane.display.Button;
 import octane.display.Container;
@@ -8,6 +9,7 @@ import octane.display.Sprite;
 import octane.display.TextField;
 import octane.display.TextField.TextStyle;
 import octane.display.ViewComponent;
+import octane.game.view.GameSkin;
 import octane.geom.Rectangle;
 import octane.types.DynamicExt;
 import octane.types.NativeTypes;
@@ -17,6 +19,9 @@ import octane.types.NativeTypes;
  */
 class DOMBuilder
 {
+	@inject('GameSkin')
+	public var skin:ISkin;
+	
 	private static inline var SCENE:String = "scene";
 	private static inline var CONTAINER:String = "container";
 	private static inline var SPRITE:String = "sprite";
@@ -35,13 +40,8 @@ class DOMBuilder
 	/**
 	 * Constructor.
 	 */
-	public function new(definitions:Map<String, String>, textureList:Map<String, NativeTexture>, ?scale:Float = 1) 
+	public function new() 
 	{
-		//_scenes = scenes;
-		_definitions = definitions;
-		_textureList = textureList;
-		_scale = scale;
-		
 		_regions = new Map<String, Rectangle>();
 		_elements = new Map<String, DisplayObject>();
 	}
@@ -58,6 +58,19 @@ class DOMBuilder
 	
 	// API
 	//==================================================================================================================
+	
+	/**
+	 * Sets up the the dom builder.
+	 * @param	definitions
+	 * @param	textureList
+	 * @param	scale
+	 */
+	public function setup(definitions:Map<String, String>, textureList:Map<String, NativeTexture>, ?scale:Float = 1):Void
+	{
+		_definitions = definitions;
+		_textureList = textureList;
+		_scale = scale;
+	}
 	
 	/**
 	 * Parses the passed dom xml. Will only create DOMElement objects for each element,
@@ -301,6 +314,7 @@ class DOMBuilder
 		
 		// Set defined properties
 		displayObject.name  = element.name;
+		displayObject.gameSkin = skin;
 		if (isDefined(element.x))         displayObject.x         = element.x * _scale;
 		if (isDefined(element.y))         displayObject.y         = element.y * _scale;
 		if (isDefined(element.width))     displayObject.width     = element.width * _scale;

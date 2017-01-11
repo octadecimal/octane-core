@@ -5,6 +5,7 @@
 -lib msignal:1.2.4
 -lib pixijs:4.2.3
 -lib waud:0.8.2
+-lib mconsole
 -cp src
 
 -cp test
