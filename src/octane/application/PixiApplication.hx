@@ -165,8 +165,8 @@ class PixiApplication extends Application implements IApplication
 		{
 			//_applicationView.x = Math.ffloor(_applicationView.x);
 			//_applicationView.y = Math.ffloor(_applicationView.y);
-			//_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
-			//_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
+			_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
+			_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
 		}
 		
 		super._onWindowResize(event);

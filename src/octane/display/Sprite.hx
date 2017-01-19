@@ -8,7 +8,7 @@ import octane.types.NativeTypes.NativeTexture;
 /**
  * ...
  */
-class Sprite extends DisplayObject
+class Sprite extends Container
 {
 	private var _native_Sprite(null, null):NativeSprite;
 	
@@ -19,7 +19,7 @@ class Sprite extends DisplayObject
 	{
 		if (_native_DisplayObject == null)
 		{
-			_native_DisplayObject = _native_Sprite = new NativeSprite(texture);
+			_native_DisplayObject = _native_Container = _native_Sprite = new NativeSprite(texture);
 		}
 		
 		super();

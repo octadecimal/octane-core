@@ -1,5 +1,6 @@
 package octane.dom;
 
+import minject.Injector;
 import octane.api.display.ISkin;
 import octane.debug.Debug;
 import octane.display.Button;
@@ -9,7 +10,6 @@ import octane.display.Sprite;
 import octane.display.TextField;
 import octane.display.TextField.TextStyle;
 import octane.display.ViewComponent;
-import octane.game.view.GameSkin;
 import octane.geom.Rectangle;
 import octane.types.DynamicExt;
 import octane.types.NativeTypes;
@@ -19,6 +19,9 @@ import octane.types.NativeTypes;
  */
 class DOMBuilder
 {
+	@inject('Injector')
+	public var injector:Injector;
+	
 	@inject('GameSkin')
 	public var skin:ISkin;
 	

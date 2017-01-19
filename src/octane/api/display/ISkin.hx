@@ -18,6 +18,10 @@ interface ISkin extends IDestroyable
 	function attachTextureProvider(textureProvider:ITextureProvider):Void;
 	function getTextures(textureNamePrefix:String):NativeTextureArray;
 	function getTexture(textureName:String):NativeTexture;
+	function hasTexture(textureName:String):Bool;
 	function getSpineData(resourceName:String):Dynamic;
 	function getAssetGroup(name:String):AssetGroup;
+	
+	function addGroupedTexture(groupName:String, textureName:String, texture:String):Void;
+	function getGroupedTexture(groupName:String, textureName:String):NativeTexture;
 }
