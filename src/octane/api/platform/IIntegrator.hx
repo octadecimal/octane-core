@@ -1,4 +1,4 @@
-package octane.api.integration;
+package octane.api.platform;
 
 import octane.api.IDestroyable;
 import octane.types.Currency;
@@ -189,7 +189,7 @@ interface IIntegrator extends IDestroyable
 	/**
 	 * Tells the wrapper to scale iFrame to the size passed in.
 	 */
-	function scaleToFit():Void;
+	function scaleToFit(bucketInfo:Dynamic):Void;
 	
 	
 	/**
