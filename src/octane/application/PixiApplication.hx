@@ -1,6 +1,8 @@
 package octane.application;
 
 import js.Browser;
+import js.html.CanvasElement;
+import js.html.Element;
 import js.html.Event;
 import msignal.Signal.Signal0;
 import msignal.Signal.Signal1;
@@ -123,6 +125,9 @@ class PixiApplication extends Application implements IApplication
 		//renderer.view.style.margin = "auto";
 		//renderer.view.style.display = "block";
 		
+		// Listen for ticks
+		app.ticker.add(onTick);
+		
 		// Force resize
 		_onWindowResize(null);
 		
@@ -149,7 +154,7 @@ class PixiApplication extends Application implements IApplication
 	
 	
 	
-	// OVERRIDES
+	// HANDLERS
 	//============================================================================================================
 	
 	/**
@@ -181,19 +186,16 @@ class PixiApplication extends Application implements IApplication
 	 */
 	override function _onRequestAnimationFrame() 
 	{
-		// Calculate time since last frame
-		//frameTime = app.ticker.elapsedMS - _previousTime;
-		
-		// Save current time
-		_previousTime = frameTime;
-		
-		// Dispatch tick
-		sigTick.dispatch(app.ticker.deltaTime * 16);
-		
-		// TODO: Calculate time passed since initial method invokation and add to elapsedTime,
-		// since it's possible that sigTick dispatches might have overhead -- or simply offload.
-		
 		// Render
 		super._onRequestAnimationFrame();
+	}
+	
+	/**
+	 * event: Tick.
+	 */
+	private function onTick():Void 
+	{
+		// Dispatch tick
+		sigTick.dispatch(app.ticker.deltaTime);
 	}
 }
