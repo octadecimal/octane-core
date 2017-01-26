@@ -5,9 +5,10 @@ package octane.util;
  */
 class ArrayUtil
 {
-	public static inline function sortAlphabetically(input)
+	public static inline function sortAlphabetically(input):Int
 	{
-		input.sort(function(a:String, b:String):Int {
+		input.sort(function(a:String, b:String):Int 
+		{
 			a = a.toLowerCase();
 			b = b.toLowerCase();
 			if (a < b) return -1;
@@ -15,7 +16,6 @@ class ArrayUtil
 			return 0;
 		});
 	}
-	
 	
 	public static inline function mod(index:Int, length:Int):Int
 	{

@@ -1,4 +1,5 @@
 package octane.util;
+
 import octane.display.DisplayObject;
 import octane.display.TextField;
 import octane.geom.Point;
@@ -9,7 +10,7 @@ import octane.geom.Rectangle;
  */
 class DisplayUtil
 {
-	static public function centerPivot(object:DisplayObject, ?roundPixels:Bool = true):Void
+	public static function centerPivot(object:DisplayObject, ?roundPixels:Bool = true):Void
 	{
 		object.pivotX = object.width / 2;
 		object.pivotY = object.height / 2;
@@ -21,7 +22,7 @@ class DisplayUtil
 		}
 	}
 	
-	public function centerPivotAndOffset(object:DisplayObject, ?roundPixels:Bool = true):Void
+	public static function centerPivotAndOffset(object:DisplayObject, ?roundPixels:Bool = true):Void
 	{
 		centerPivot(object);
 		
@@ -35,7 +36,7 @@ class DisplayUtil
 		}
 	}
 	
-	static public function fitTextFieldToRegion(textField:TextField, region:Rectangle):Void
+	public static function fitTextFieldToRegion(textField:TextField, region:Rectangle):Void
 	{
 		textField.anchor = new Point(0.5, 0.5);
 		
@@ -43,7 +44,7 @@ class DisplayUtil
 		textField.y = Math.ffloor(region.height / 2);
 	}
 	
-	static public function expandRectangle(input:Rectangle, width:Float, height:Float):Rectangle
+	public static function expandRectangle(input:Rectangle, width:Float, height:Float):Rectangle
 	{
 		var output:Rectangle = new Rectangle();
 		

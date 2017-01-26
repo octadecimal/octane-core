@@ -1,7 +1,6 @@
 package octane.types;
 
 import haxe.ds.Vector;
-import msignal.Signal;
 import octane.display.Sprite;
 import octane.types.NativeTypes.NativeTexture;
 
@@ -138,14 +137,14 @@ class Grid
 		
 		var firstRow:GridCell = _grid[col][0];
 		
-		for (y in 0..._numPaddedRows-1)
+		for (y in 0..._numPaddedRows - 1)
 		{
 			_grid[col][y] = _grid[col][y + 1];
 		}
 		
 		firstRow.sprite.y += params.cellHeight * _numPaddedRows;
 		firstRow.offset.y += _numPaddedRows;
-		_grid[col][_numPaddedRows-1] = firstRow;
+		_grid[col][_numPaddedRows - 1] = firstRow;
 		
 		resetPositions();
 	}
@@ -156,14 +155,14 @@ class Grid
 		
 		var firstCol:GridCell = _grid[0][row];
 		
-		for (x in 0..._numPaddedCols-1)
+		for (x in 0..._numPaddedCols - 1)
 		{
 			_grid[x][row] = _grid[x + 1][row];
 		}
 		
 		firstCol.sprite.x += params.cellWidth * _numPaddedCols;
 		firstCol.offset.x += _numPaddedCols;
-		_grid[_numPaddedCols-1][row] = firstCol;
+		_grid[_numPaddedCols - 1][row] = firstCol;
 		
 		resetPositions();
 	}

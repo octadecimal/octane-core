@@ -1,6 +1,5 @@
 package octane.types;
 
-
 #if flash
 
 #else
