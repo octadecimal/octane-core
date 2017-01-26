@@ -3,7 +3,7 @@
 -lib munit:2.1.2
 -lib hamcrest:2.0.1
 -lib msignal:1.2.4
--lib pixijs:4.2.3
+-lib pixijs:4.3.0
 -lib waud:0.8.2
 -lib minject
 -cp src

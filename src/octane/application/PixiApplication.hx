@@ -118,10 +118,10 @@ class PixiApplication extends Application implements IApplication
 		start();
 		
 		// Center the renderer
-		canvas.style.position = "";
-		renderer.view.style.padding = 0;
-		renderer.view.style.margin = "auto";
-		renderer.view.style.display = "block";
+		//canvas.style.position = "";
+		//renderer.view.style.padding = 0;
+		//renderer.view.style.margin = "auto";
+		//renderer.view.style.display = "block";
 		
 		// Force resize
 		_onWindowResize(null);
@@ -165,8 +165,8 @@ class PixiApplication extends Application implements IApplication
 		{
 			//_applicationView.x = Math.ffloor(_applicationView.x);
 			//_applicationView.y = Math.ffloor(_applicationView.y);
-			_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
-			_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
+			//_applicationView.x = Math.ffloor((Browser.window.innerWidth - properties.bucketWidth) / 2);
+			//_applicationView.y = Math.ffloor((Browser.window.innerHeight - properties.bucketHeight) / 2);
 		}
 		
 		super._onWindowResize(event);
@@ -179,21 +179,21 @@ class PixiApplication extends Application implements IApplication
 	 * event: Animation frame requested.
 	 * @param	elapsedTime
 	 */
-	override function _onRequestAnimationFrame(elapsedTime:Float) 
+	override function _onRequestAnimationFrame() 
 	{
 		// Calculate time since last frame
-		frameTime = elapsedTime - _previousTime;
+		//frameTime = app.ticker.elapsedMS - _previousTime;
 		
 		// Save current time
-		_previousTime = elapsedTime;
+		_previousTime = frameTime;
 		
 		// Dispatch tick
-		sigTick.dispatch(frameTime);
+		sigTick.dispatch(app.ticker.deltaTime * 16);
 		
 		// TODO: Calculate time passed since initial method invokation and add to elapsedTime,
 		// since it's possible that sigTick dispatches might have overhead -- or simply offload.
 		
 		// Render
-		super._onRequestAnimationFrame(elapsedTime);
+		super._onRequestAnimationFrame();
 	}
 }

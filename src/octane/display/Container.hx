@@ -25,7 +25,10 @@ class Container extends DisplayObject
 		}
 		
 		// Create child lookup map
-		_childrenMap = new Map<NativeDisplayObject, DisplayObject>();
+		if (_childrenMap == null)
+		{
+			_childrenMap = new Map<NativeDisplayObject, DisplayObject>();
+		}
 		
 		super();
 	}
@@ -63,16 +66,17 @@ class Container extends DisplayObject
 	
 	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
 	{
-		_native_Container.addChildAt(child._native_DisplayObject, index);
 		_childrenMap.set(child._native_DisplayObject, child);
+		_native_Container.addChildAt(child._native_DisplayObject, index);
 		child.parent = this;
 		return child;
 	}
 	
 	public function removeChild(child:DisplayObject):DisplayObject
 	{
-		_native_Container.removeChild(child._native_DisplayObject);
+		trace(_childrenMap == null);
 		_childrenMap.remove(child._native_DisplayObject);
+		_native_Container.removeChild(child._native_DisplayObject);
 		child.parent = null;
 		return child;
 	}

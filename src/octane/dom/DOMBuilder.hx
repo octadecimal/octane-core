@@ -8,7 +8,6 @@ import octane.display.Container;
 import octane.display.DisplayObject;
 import octane.display.Sprite;
 import octane.display.TextField;
-import octane.display.TextField.TextStyle;
 import octane.display.ViewComponent;
 import octane.geom.Rectangle;
 import octane.types.DynamicExt;
@@ -405,9 +404,9 @@ class DOMBuilder
 		}
 	}
 
-	private function getTextStyleFromElement(element:DOMElement):TextStyle
+	private function getTextStyleFromElement(element:DOMElement):Dynamic
 	{
-		var textStyle:TextStyle = {};
+		var textStyle:Dynamic = {};
 		
 		// TODO
 		//textStyle.font = element.font;
