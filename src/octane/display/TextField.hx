@@ -22,7 +22,7 @@ class TextField extends Sprite
 	{
 		if (_native_DisplayObject == null)
 		{
-			_native_DisplayObject = _native_Sprite = _native_TextField = new NativeTextField(text, style);
+			_native_DisplayObject = _native_Container = _native_Sprite = _native_TextField = new NativeTextField(text, style);
 		}
 		
 		super(null);

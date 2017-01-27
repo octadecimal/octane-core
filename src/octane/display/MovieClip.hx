@@ -18,7 +18,7 @@ class MovieClip extends Sprite implements IAnimation
 	 */
 	public function new(textures:NativeTextureArray, ?loop:Bool = true, ?fps:Int = 30)
 	{
-		_native_DisplayObject = _native_Sprite = _native_MovieClip = new NativeMovieClip(textures);
+		_native_DisplayObject = _native_Container = _native_Sprite = _native_MovieClip = new NativeMovieClip(textures);
 		
 		this.fps = fps;
 		this.loop = loop;

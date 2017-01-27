@@ -74,7 +74,6 @@ class Container extends DisplayObject
 	
 	public function removeChild(child:DisplayObject):DisplayObject
 	{
-		trace(_childrenMap == null);
 		_childrenMap.remove(child._native_DisplayObject);
 		_native_Container.removeChild(child._native_DisplayObject);
 		child.parent = null;
