@@ -5,12 +5,12 @@ package octane.util;
  */
 class StringUtil
 {
-	public static inline function getClassName(object):String
+	public static inline function getClassName(object:Dynamic)
 	{
 		return getFullClassName(object).split(".").pop();
 	}
 	
-	public static inline function getFullClassName(object):String
+	public static inline function getFullClassName(object:Dynamic)
 	{
 		return Type.getClassName(Type.getClass(object));
 	}

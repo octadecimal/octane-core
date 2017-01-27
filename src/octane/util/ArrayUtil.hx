@@ -5,7 +5,7 @@ package octane.util;
  */
 class ArrayUtil
 {
-	public static inline function sortAlphabetically(input):Int
+	public static inline function sortAlphabetically(input):Void
 	{
 		input.sort(function(a:String, b:String):Int 
 		{

@@ -1,6 +1,7 @@
 package octane.types;
 
 import haxe.ds.Vector;
+import msignal.Signal;
 import octane.display.Sprite;
 import octane.types.NativeTypes.NativeTexture;
 
