@@ -1,8 +1,6 @@
 package octane.types;
 
-#if flash
-
-#else
+#if js
 typedef NativeDisplayObject = pixi.core.display.DisplayObject;
 typedef NativeContainer = pixi.core.display.Container;
 typedef NativeSprite = pixi.core.sprites.Sprite;
@@ -17,4 +15,6 @@ typedef NativePoint = pixi.core.math.Point;
 typedef NativeRectangle = pixi.core.math.shapes.Rectangle;
 typedef NativeSound = WaudSound;
 typedef NativeISound = IWaudSound;
+#else
+
 #end
