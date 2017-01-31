@@ -126,7 +126,7 @@ class Button extends Container
 			_label.text = text;
 		}
 		
-		DisplayUtil.fitTextFieldToRegion(_label, _labelRegion);
+		_label.fitToRect(_labelRegion);
 	}
 	
 	
