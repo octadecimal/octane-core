@@ -127,7 +127,7 @@ class DisplayObject implements IDisplayObject
 		}
 	}
 	
-	public function fitToRect(rect:Rectangle, ?anchorX:Float = 0.5, ?anchorY:Float = 0.5):Void
+	public function fitToRect(rect:Rectangle, ?anchorX:Float = 0.5, ?anchorY:Float = 0.5, ?roundPixels:Bool = true):Void
 	{
 		scaleX = scaleY = 1;
 		
@@ -138,6 +138,12 @@ class DisplayObject implements IDisplayObject
 		
 		x = rect.x + (rect.width  * anchorX) - (width  * anchorX);
 		y = rect.y + (rect.height * anchorY) - (height * anchorY);
+		
+		if (roundPixels)
+		{
+			x = Math.ffloor(x);
+			y = Math.ffloor(y);
+		}
 	}
 	
 	
