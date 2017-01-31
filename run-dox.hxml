@@ -1,0 +1,29 @@
+-cp src
+-cp ../octane-core/src
+-cp ../octane-game/src
+-cp ../octane-slots/src
+-cp ../octane-superslick/src
+
+-D doc-gen
+
+--macro include('octane')
+
+#--no-output
+
+-lib munit
+-lib hamcrest
+-lib msignal
+-lib pixijs
+-lib waud
+-lib minject
+
+#--each
+
+
+#--next
+-xml bin/doc/js.xml
+-js bin/doc/dummy.js
+
+
+--next
+-cmd haxelib run dox -i bin/doc -in octane -o bin/doc/pages
