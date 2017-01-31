@@ -16,4 +16,5 @@ typedef NativeTextureArray = Array<NativeTexture>;
 typedef NativePoint = pixi.core.math.Point;
 typedef NativeRectangle = pixi.core.math.shapes.Rectangle;
 typedef NativeSound = WaudSound;
+typedef NativeISound = IWaudSound;
 #end

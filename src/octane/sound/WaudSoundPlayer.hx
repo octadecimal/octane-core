@@ -1,14 +1,19 @@
 package octane.sound;
 
 import octane.api.sound.ISoundPlayer;
+import octane.game.model.ResourceList;
 import octane.types.DynamicExt;
+import octane.util.StringUtil;
 
 /**
  * ...
  */
 class WaudSoundPlayer implements ISoundPlayer
 {
+	public var resourceList:ResourceList;
+	
 	private var _base64Sounds:Map<String, String>;
+	private var _activeSounds:Map<String, WaudSound>;
 	
 
 	/**
@@ -18,6 +23,8 @@ class WaudSoundPlayer implements ISoundPlayer
 	{
 		Waud.init();
 		Waud.autoMute();
+		
+		_activeSounds = new Map<String, WaudSound>();
 	}
 	
 	/**
@@ -43,15 +50,56 @@ class WaudSoundPlayer implements ISoundPlayer
 		_base64Sounds.set(id, data);
 	}
 	
-	public function playSound(id:String):Void 
+	public function playSound(id:String, ?params:Dynamic):Void 
 	{
-		if (_base64Sounds != null && _base64Sounds.exists(id))
+		var sound:WaudSound = null;
+		
+		if (params == null)
 		{
-			new WaudSound(_base64Sounds.get(id), { autoplay: true });
+			params = { autoplay: true, onend: onSoundStopped };
 		}
 		else
 		{
-			// TODO
+			params.autoplay = true;
+			params.onend = onSoundStopped;
 		}
+		
+		if (_base64Sounds != null && _base64Sounds.exists(id))
+		{
+			sound = new WaudSound(_base64Sounds.get(id), params);
+		}
+		else
+		{
+			sound = new WaudSound(resourceList.getResourcePath(id), params);
+		}
+		
+		_activeSounds.set(id, sound);
+	}
+	
+	public function stopSound(id:String):Void
+	{
+		var sound:WaudSound = _activeSounds.get(id);
+		sound.stop();
+		onSoundStopped(sound);
+	}
+	
+	private function onSoundStopped(sound:IWaudSound) 
+	{
+		trace(sound.url);
+		
+		trace("PRE");
+		sound.stop();
+		
+		
+		for (key in _activeSounds.keys())
+		{
+			if (_activeSounds.get(key) == sound)
+			{
+				_activeSounds.remove(key);
+			}
+		}
+		
+		trace("POST");
+		trace(_activeSounds.keys());
 	}
 }
