@@ -133,11 +133,7 @@ class DisplayObject implements IDisplayObject
 		
 		if (width > rect.width || height > rect.height)
 		{
-			var ratioX:Float = rect.width / width;
-			var ratioY:Float = rect.height / height;
-			var ratio:Float = Math.min(ratioX, ratioY);
-			
-			scaleX = scaleY = ratio;
+			scaleX = scaleY = Math.min(rect.width / width, rect.height / height);
 		}
 		
 		x = rect.x + (rect.width  * anchorX) - (width  * anchorX);
