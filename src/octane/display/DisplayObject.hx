@@ -4,6 +4,7 @@ import msignal.Signal.Signal1;
 import octane.api.display.IDisplayObject;
 import octane.api.display.ISkin;
 import octane.display.Container;
+import octane.geom.Rectangle;
 import octane.types.NativeTypes.NativeDisplayObject;
 
 /**
@@ -124,6 +125,23 @@ class DisplayObject implements IDisplayObject
 		{
 			this.destroy();
 		}
+	}
+	
+	public function fitToRect(rect:Rectangle, ?anchorX:Float = 0.5, ?anchorY:Float = 0.5):Void
+	{
+		scaleX = scaleY = 1;
+		
+		if (width > rect.width || height > rect.height)
+		{
+			var ratioX:Float = rect.width / width;
+			var ratioY:Float = rect.height / height;
+			var ratio:Float = Math.min(ratioX, ratioY);
+			
+			scaleX = scaleY = ratio;
+		}
+		
+		x = rect.x + (rect.width  * anchorX) - (width  * anchorX);
+		y = rect.y + (rect.height * anchorY) - (height * anchorY);
 	}
 	
 	
