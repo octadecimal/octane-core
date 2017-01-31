@@ -38,7 +38,8 @@ class DisplayUtil
 	
 	public static function fitTextFieldToRegion(textField:TextField, region:Rectangle):Void
 	{
-		textField.anchor = new Point(0.5, 0.5);
+		textField.anchorX = 0.5;
+		textField.anchorY = 0.5;
 		
 		textField.x = Math.ffloor(region.width / 2);
 		textField.y = Math.ffloor(region.height / 2);

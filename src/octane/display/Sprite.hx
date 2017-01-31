@@ -55,18 +55,35 @@ class Sprite extends Container
 	
 	
 	/**
-	 * Anchor.
+	 * AnchorX.
 	 */
-	public var anchor(null, set):Point;
+	public var anchorX(get, set):Float;
 	
-	/*function get_anchor():Point 
+	function get_anchorX():Float 
 	{
-		return _native_Sprite.anchor;
-	}*/
+		return _native_Sprite.anchor.x;
+	}
 	
-	function set_anchor(value:Point):Point 
+	function set_anchorX(value:Float):Float 
 	{
-		_native_Sprite.anchor = value._native_Point;
+		_native_Sprite.anchor.x = value;
+		return value;
+	}
+	
+	
+	/**
+	 * AnchorY.
+	 */
+	public var anchorY(get, set):Float;
+	
+	function get_anchorY():Float 
+	{
+		return _native_Sprite.anchor.y;
+	}
+	
+	function set_anchorY(value:Float):Float 
+	{
+		_native_Sprite.anchor.y = value;
 		return value;
 	}
 	
