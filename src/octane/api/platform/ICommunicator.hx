@@ -1,9 +1,11 @@
 package octane.api.platform;
 
+import octane.api.IDestroyable;
+
 /**
  * ...
  */
-interface ICommunicator 
+interface ICommunicator extends IDestroyable
 {
 	
 }

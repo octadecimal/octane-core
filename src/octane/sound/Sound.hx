@@ -140,7 +140,10 @@ class Sound
 	 */
 	private function onSoundComplete(sound:NativeISound):Void
 	{
+		// Dispatch complete
 		sigComplete.dispatch(this);
+		
+		// Destroy sound
 		destroy();
 	}
 }
