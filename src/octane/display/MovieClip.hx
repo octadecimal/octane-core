@@ -10,8 +10,9 @@ import octane.types.NativeTypes.NativeTextureArray;
  */
 class MovieClip extends Sprite implements IAnimation
 {
-	// Native movieclip
+	// Native movieclip reference
 	private var _native_MovieClip(null, null):NativeMovieClip;
+	
 	
 	/**
 	 * Constructor.
@@ -50,28 +51,20 @@ class MovieClip extends Sprite implements IAnimation
 	 */
 	public var sigAnimationComplete(default, null):Signal1<IAnimation>;
 	
-	/**
-	 * Animation resource (used for resource pooling).
-	 */
-	//public var resource(default, default):AnimationResource;
-	
 	
 	/**
 	 * Current frame (texture index).
 	 */
 	public var currentFrame(get, set):Int;
-	function get_currentFrame():Int
-	{
+	
+	function get_currentFrame():Int {
 		return _native_MovieClip.currentFrame;
 	}
-	function set_currentFrame(value:Int):Int
-	{
-		if (playing)
-		{
+	function set_currentFrame(value:Int):Int {
+		if (playing) {
 			_native_MovieClip.gotoAndPlay(value);
 		}
-		else
-		{
+		else {
 			_native_MovieClip.gotoAndStop(value);
 		}
 		return _native_MovieClip.currentFrame;
@@ -82,8 +75,8 @@ class MovieClip extends Sprite implements IAnimation
 	 * Total number of frames (textures).
 	 */
 	public var totalFrames(get, null):Int;
-	function get_totalFrames():Int
-	{
+	
+	function get_totalFrames():Int {
 		return _native_MovieClip.totalFrames;
 	}
 	
@@ -92,8 +85,8 @@ class MovieClip extends Sprite implements IAnimation
 	 * Indicates if the MovieClip is currently playing.
 	 */
 	public var playing(get, null):Bool;
-	function get_playing():Bool
-	{
+	
+	function get_playing():Bool {
 		return _native_MovieClip.playing;
 	}
 	
@@ -102,12 +95,11 @@ class MovieClip extends Sprite implements IAnimation
 	 * Whether or not the movie clip repeats after playing.
 	 */
 	public var loop(get, set):Bool;
-	function get_loop():Bool
-	{
+	
+	function get_loop():Bool {
 		return _native_MovieClip.loop;
 	}
-	function set_loop(value:Bool):Bool
-	{
+	function set_loop(value:Bool):Bool {
 		return _native_MovieClip.loop = value;
 	}
 	
@@ -116,13 +108,12 @@ class MovieClip extends Sprite implements IAnimation
 	 * MovieClip frame rate.
 	 */
 	public var fps(get, set):Float;
-	function get_fps():Float
-	{
-		return _native_MovieClip.animationSpeed * 60;
+	
+	function get_fps():Float { 
+		return _native_MovieClip.animationSpeed * 60; 
 	}
-	function set_fps(value:Float):Float
-	{
-		return _native_MovieClip.animationSpeed = value / 60;
+	function set_fps(value:Float):Float {
+		return _native_MovieClip.animationSpeed = value / 60; 
 	}
 	
 	
@@ -130,13 +121,12 @@ class MovieClip extends Sprite implements IAnimation
 	 * MovieClip textures.
 	 */
 	public var textures(get, set):NativeTextureArray;
-	function get_textures():NativeTextureArray
-	{
-		return _native_MovieClip.textures;
+	
+	function get_textures():NativeTextureArray { 
+		return _native_MovieClip.textures; 
 	}
-	function set_textures(textures:NativeTextureArray):NativeTextureArray
-	{
-		return _native_MovieClip.textures = textures;
+	function set_textures(textures:NativeTextureArray):NativeTextureArray { 
+		return _native_MovieClip.textures = textures; 
 	}
 	
 	

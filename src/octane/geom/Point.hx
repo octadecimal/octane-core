@@ -3,13 +3,20 @@ package octane.geom;
 import octane.types.NativeTypes.NativePoint;
 
 /**
- * ...
+ * 
  */
 class Point
 {
 	public var _native_Point(default, null):NativePoint;
 	
+	/**
+	 * X coordinate.
+	 */
 	public var x(get, set):Float;
+	
+	/**
+	 * Y coordinate.
+	 */
 	public var y(get, set):Float;
 	
 	/**

@@ -3,11 +3,34 @@ package octane.geom;
 import octane.types.NativeTypes.NativeRectangle;
 
 /**
- * ...
+ * A rectangle represents a boundary with a position (x,y) and a width and height.
  */
 class Rectangle
 {
+	/**
+	 * X coordinate.
+	 */
+	public var x(get, set):Float;
+	
+	/**
+	 * Y coordinate.
+	 */
+	public var y(get, set):Float;
+	
+	/**
+	 * Width.
+	 */
+	public var width(get, set):Float;
+	
+	/**
+	 * Height.
+	 */
+	public var height(get, set):Float;
+	
+	
+	// Native rectangle reference
 	private var _native_Rectangle(null, null):NativeRectangle;
+	
 	
 	/**
 	 * Constructor.
@@ -22,32 +45,29 @@ class Rectangle
 	 */
 	public function destroy():Void 
 	{
-		
+		_native_Rectangle = null;
 	}
-	
-	
-	
-	// PROPERTIES
-	//============================================================================================================
-	
-	public var x(get, set):Float;
-	
-	public var y(get, set):Float;
-	
-	public var width(get, set):Float;
-	
-	public var height(get, set):Float;
 	
 	
 	
 	// API
 	//============================================================================================================
 	
+	/**
+	 * Returns a copy (new instance) of this rectangle.
+	 * @return
+	 */
 	public function clone():Rectangle
 	{
 		return new Rectangle(x, y, width, height);
 	}
 	
+	/**
+	 * Returns true if the passed x,y coordinates exist in this rectangle's boundary.
+	 * @param	x
+	 * @param	y
+	 * @return
+	 */
 	public function contains(x:Float, y:Float):Bool
 	{
 		return _native_Rectangle.contains(x, y);
@@ -55,7 +75,7 @@ class Rectangle
 	
 	
 	
-	// GETTERS/SETTERS
+	// ACCESSORS
 	//============================================================================================================
 	
 	function get_x():Float 

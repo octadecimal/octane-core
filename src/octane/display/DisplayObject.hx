@@ -12,10 +12,131 @@ import octane.types.NativeTypes.NativeDisplayObject;
  */
 class DisplayObject implements IDisplayObject
 {
+	/**
+	 * Dispatched when `interactive` is set to true and this display object is clicked.
+	 */
+	public var sigClicked(default, null):Signal1<DisplayObject>;
+	
+	/**
+	 * Dispatched when `interactive` is set to true and the mouse is pressed over this display object.
+	 */
+	public var sigMouseDown(default, null):Signal1<DisplayObject>;
+	
+	/**
+	 * Dispatched when `interactive` is set to true and the mouse is rolled out of this display object.
+	 */
+	public var sigMouseOut(default, null):Signal1<DisplayObject>;
+	
+	/**
+	 * Dispatched when `interactive` is set to true and the mouse is rolled over this display object.
+	 */
+	public var sigMouseOver(default, null):Signal1<DisplayObject>;
+	
+	
+	/**
+	 * Name of this display object.
+	 */
+	public var name(default, default):String;
+	
+	/**
+	 * [DEPRECATE]
+	 * Reference to an optional game skin reference. This is useful as it can provide a common
+	 * pattern for passing a skin reference to a child display object, and also allows for automated
+	 * mechanisms like the DOMBuilder to set this reference so that it's easily exposed and
+	 * accesible to the game programmer.
+	 */
+	public var gameSkin(default, default):ISkin;
+	
+	/**
+	 * If true, this display object will be cached as a bitmap.
+	 */
+	public var cacheAsBitmap(get, set):Bool;
+	
+	/**
+	 * Display object visibility.
+	 */
+	public var visible(get, set):Bool;
+	
+	/**
+	 * Display object horizontal position in absolute pixels.
+	 */
+	public var x(get, set):Float;
+	
+	/**
+	 * Display object vertical position in absolute pixels.
+	 */
+	public var y(get, set):Float;
+	
+	/**
+	 * Display object x pivot in absolute pixels.
+	 */
+	public var pivotX(get, set):Float;
+	
+	/**
+	 * Display object y pivot in absolute pixels.
+	 */
+	public var pivotY(get, set):Float;
+	
+	/**
+	 * Display object horizontal scale.
+	 */
+	public var scaleX(get, set):Float;
+	
+	/**
+	 * Display object vertical scale.
+	 */
+	public var scaleY(get, set):Float;
+	
+	/**
+	 * Display object width in absolute pixels.
+	 */
+	public var width(get, set):Float;
+	
+	/**
+	 * Display object height in absolute scale.
+	 */
+	public var height(get, set):Float;
+	
+	/**
+	 * Display object alpha.
+	 */
+	public var alpha(get, set):Float;
+	
+	/**
+	 * Display object rotation in radians.
+	 */
+	public var rotation(get, set):Float;
+	
+	/**
+	 * Display object mask.
+	 */
+	public var mask(get, set):DisplayObject;
+	
+	/**
+	 * Parent of this display object.
+	 */
+	public var parent(default, default):Container;
+	
+	/**
+	 * Interactive flag, if true mouse handlers will be added and interaction signals will be dispatched.
+	 */
+	public var interactive(get, set):Bool;
+	
+	/**
+	 * Scale resolution.
+	 */
+	public var resolution(default, set):Float = 1;
+	
+	
+	// Reference to native display object.
 	private var _native_DisplayObject(null, null):NativeDisplayObject;
 	
+	
+	// Virtual scale, used for handling resolution with native scaling.
 	private var _virtualScaleX:Float = 1;
 	private var _virtualScaleY:Float = 1;
+	
+	
 	
 	/**
 	 * Constructor.
@@ -60,60 +181,13 @@ class DisplayObject implements IDisplayObject
 	
 	
 	
-	// SIGNALS
-	//============================================================================================================
-	
-	public var sigClicked(default, null):Signal1<DisplayObject>;
-	public var sigMouseDown(default, null):Signal1<DisplayObject>;
-	public var sigMouseOut(default, null):Signal1<DisplayObject>;
-	public var sigMouseOver(default, null):Signal1<DisplayObject>;
-	
-	
-	
-	// PROPERTIES
-	//============================================================================================================
-	
-	public var name(default, default):String;
-	
-	public var gameSkin(default, default):ISkin;
-	
-	public var cacheAsBitmap(get, set):Bool;
-	
-	public var visible(get, set):Bool;
-	
-	public var x(get, set):Float;
-	
-	public var y(get, set):Float;
-	
-	public var pivotX(get, set):Float;
-	
-	public var pivotY(get, set):Float;
-	
-	public var scaleX(get, set):Float;
-	
-	public var scaleY(get, set):Float;
-	
-	public var width(get, set):Float;
-	
-	public var height(get, set):Float;
-	
-	public var alpha(get, set):Float;
-	
-	public var rotation(get, set):Float;
-	
-	public var mask(get, set):DisplayObject;
-	
-	public var parent(default, default):Container;
-	
-	public var interactive(get, set):Bool;
-	
-	public var resolution(default, set):Float = 1;
-	
-	
-	
 	// API
 	//============================================================================================================
 	
+	/**
+	 * Removes this display object from its parent container, also allowing automatic destruction.
+	 * @param	destroy		If true, object will also destroy itself.
+	 */
 	public function removeFromParent(?destroy:Bool = false):Void
 	{
 		if (parent != null)
@@ -127,6 +201,13 @@ class DisplayObject implements IDisplayObject
 		}
 	}
 	
+	/**
+	 * Aligns and fits this object to the passed rectangluar boundary.
+	 * @param	rect			Input rectangle to fit to.
+	 * @param	anchorX			Horizontal alignment.
+	 * @param	anchorY			Vertical alignemnt.
+	 * @param	roundPixels		If turue (default), final fitted vales will be rounded.
+	 */
 	public function fitToRect(rect:Rectangle, ?anchorX:Float = 0.5, ?anchorY:Float = 0.5, ?roundPixels:Bool = true):Void
 	{
 		scaleX = scaleY = 1;
@@ -151,21 +232,33 @@ class DisplayObject implements IDisplayObject
 	// HANDLERS
 	//============================================================================================================
 	
+	/**
+	 * Mouse up.
+	 */
 	private function onMouseUp():Void
 	{
 		sigClicked.dispatch(this);
 	}
 	
+	/**
+	 * Mouse down.
+	 */
 	private function onMouseDown():Void
 	{
 		sigMouseDown.dispatch(this);
 	}
 	
+	/**
+	 * Mouse out.
+	 */
 	private function onMouseOut():Void
 	{
 		sigMouseOut.dispatch(this);
 	}
 	
+	/**
+	 * Mouse over.
+	 */
 	private function onMouseOver():Void
 	{
 		sigMouseOver.dispatch(this);

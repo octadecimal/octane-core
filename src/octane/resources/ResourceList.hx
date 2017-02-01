@@ -37,11 +37,20 @@ class ResourceList
 	// API
 	//============================================================================================================
 	
-	public function getResourcePath(key:String):String
+	/**
+	 * Returns the resource path for a resource by id.
+	 * @param	id
+	 */
+	public function getResourcePath(id:String):String
 	{
-		return _resources.get(key);
+		return _resources.get(id);
 	}
 	
+	/**
+	 * Returns a map of resources that belong to the passed context.
+	 * @param	context
+	 * @return
+	 */
 	public function getContextResources(context:String):Map<String, String>
 	{
 		return _contexts.get(context);
@@ -52,6 +61,11 @@ class ResourceList
 	// PRIVATE
 	//============================================================================================================
 	
+	/**
+	 * Builds a contextualized map of all resources.
+	 * @param	input
+	 * @return
+	 */
 	private function buildContextMap(input:DynamicExt):Map<String, Map<String, String>>
 	{
 		var output:Map<String, Map<String, String>> = new Map<String, Map<String, String>>();
@@ -71,6 +85,11 @@ class ResourceList
 		return output;
 	}
 	
+	/**
+	 * Builds a flat non-contextualized map of all resources.
+	 * @param	input
+	 * @return
+	 */
 	private function buildResourceMap(input:DynamicExt):Map<String, String>
 	{
 		var output:Map<String, String> = new Map<String, String>();
