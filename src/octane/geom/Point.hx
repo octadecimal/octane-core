@@ -29,6 +29,14 @@ class Point
 		_native_Point = new NativePoint(x, y);
 	}
 	
+	/**
+	 * Destructor.
+	 */
+	public function destroy():Void
+	{
+		_native_Point = null;
+	}
+	
 	
 	
 	// API
@@ -41,6 +49,29 @@ class Point
 	public function clone():Point
 	{
 		return new Point(x, y);
+	}
+	
+	/**
+	 * Returns the angle between this point and the passed point.
+	 * @param	point
+	 * @return
+	 */
+	public function angleBetween(point:Point):Float
+	{
+		return Math.atan2(point.y - y, point.x - x);
+	}
+	
+	/**
+	 * Returns the distance from the passed point to this point.
+	 * @param	point
+	 * @return
+	 */
+	public function distanceBetween(point:Point):Float
+	{
+		var dx:Float = point.x - x;
+		var dy:Float = point.y - y;
+		
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	
