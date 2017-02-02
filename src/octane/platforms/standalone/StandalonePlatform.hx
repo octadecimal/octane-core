@@ -5,7 +5,7 @@ import octane.api.platform.ICommunicator;
 import octane.api.platform.IGameUI;
 import octane.api.platform.IIntegrator;
 import octane.api.platform.IPlatform;
-import octane.game.model.parsers.Parser;
+import octane.integration.ResponseParser;
 import octane.debug.Debug;
 import octane.game.model.vo.ResponseVO;
 
@@ -22,6 +22,7 @@ class StandalonePlatform implements IPlatform
 	public var communicator(default, null):ICommunicator;
 	
 	public var responseDefinition:Class<ResponseVO> = ResponseVO;
+	public var lastResponse:ResponseVO;
 	
 	/**
 	 * Constructor.
@@ -54,7 +55,7 @@ class StandalonePlatform implements IPlatform
 	
 	/* INTERFACE octane.api.platform.IPlatform */
 	
-	public function registerParser(parser:Parser):Void 
+	public function registerParser(parser:ResponseParser):Void 
 	{
 		
 	}

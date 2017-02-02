@@ -1,4 +1,5 @@
 package octane.types;
+
 import octane.assert.Assert;
 import octane.debug.Debug;
 
