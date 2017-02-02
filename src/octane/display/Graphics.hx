@@ -142,5 +142,31 @@ class Graphics extends DisplayObject
 		
 		return this;
 	}
+	
+	/**
+	 * Moves pointer to.
+	 * @param	x
+	 * @param	y
+	 * @return
+	 */
+	public function moveTo(x:Float, y:Float):Graphics
+	{
+		_native_Graphics.moveTo(x, y);
+		
+		return this;
+	}
+	
+	/**
+	 * Moves pointer to.
+	 * @param	x
+	 * @param	y
+	 * @return
+	 */
+	public function lineTo(x:Float, y:Float):Graphics
+	{
+		_native_Graphics.lineTo(x, y);
+		
+		return this;
+	}
 
 }
