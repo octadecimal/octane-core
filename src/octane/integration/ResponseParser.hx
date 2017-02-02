@@ -19,4 +19,9 @@ class ResponseParser
 	{
 		
 	}
+	
+	public function canParse(data:XMLMap, response:ResponseVO):Bool
+	{
+		return true;
+	}
 }

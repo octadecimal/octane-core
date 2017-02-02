@@ -11,7 +11,7 @@ import octane.slots.model.parsers.genesis.GameStateParser;
  */
 interface IPlatform extends IDestroyable
 {
-	var sigResponseReceived:Signal1<Dynamic>;
+	var sigResponseReceived:Signal1<ResponseVO>;
 	
 	var ui(default, null):IGameUI;
 	var integrator(default, null):IIntegrator;

@@ -15,7 +15,7 @@ import octane.game.model.vo.ResponseVO;
  */
 class StandalonePlatform implements IPlatform
 {
-	public var sigResponseReceived:Signal1<Dynamic>;
+	public var sigResponseReceived:Signal1<ResponseVO>;
 	
 	public var ui(default, null):IGameUI;
 	public var integrator(default, null):IIntegrator;

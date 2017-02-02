@@ -14,6 +14,8 @@ interface IGameUI extends IDestroyable
 	function show():Void;
 	function hide():Void;
 	
+	function enableButtons():Void;
+	function disableButtons():Void;
 	function setMessage(message:String):Void;
 	
 	function configureCoinSizes(index:Int, sizes:Array<Dynamic>):Void;
