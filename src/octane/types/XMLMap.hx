@@ -39,6 +39,25 @@ abstract XMLMap(XMLNode) from XMLNode to XMLNode
 		return new XMLMap(currentNode);
 	}
 	
+	public function exists(path:String):Bool
+	{
+		var currentNode = this;
+		var paths:Array<String> = path.split(".");
+		
+		while (paths.length > 0)
+		{
+			var currentPath:String = paths.shift();
+			currentNode = getChildNodeByName(currentNode, currentPath);
+			
+			if (currentNode == null)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	
 	
 	// PRIVATE
