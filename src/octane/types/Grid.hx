@@ -255,7 +255,8 @@ class Grid
 }
 
 
-typedef GridParameters = {
+typedef GridParameters = 
+{
 	var numCols:Int;
 	var numRows:Int;
 	var cellWidth:Float;

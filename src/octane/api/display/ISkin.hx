@@ -3,9 +3,9 @@ package octane.api.display;
 import octane.api.IDestroyable;
 import octane.api.skin.ITextureProvider;
 import octane.display.AssetGroup;
+import octane.types.DynamicExt;
 import octane.types.NativeTypes.NativeTexture;
 import octane.types.NativeTypes.NativeTextureArray;
-import octane.types.DynamicExt;
 
 /**
  * ...

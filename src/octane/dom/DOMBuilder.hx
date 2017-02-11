@@ -16,6 +16,7 @@ import octane.types.NativeTypes;
 /**
  * ...
  */
+@:build(octane.macros.TypeBuilder.build())
 class DOMBuilder
 {
 	@inject('Injector')
